@@ -73,7 +73,7 @@ export default function Page(): ReactNode {
 					<NavButton
 						href="/solo-mode"
 						label="Solo Mode"
-						className="bg-violet-700"
+						className="bg-secondary"
 					/>
 				</MotiView>
 			</View>
