@@ -1,14 +1,26 @@
 {
-  "extends": ["@acme/tsconfig/base.json"],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["./src/*"]
-    },
-    "jsx": "react-native",
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "types": ["nativewind/types"]
-  },
-  "include": ["src", "*.ts", "*.js", ".expo/types/**/*.ts", "expo-env.d.ts"],
-  "exclude": ["node_modules"]
+	"extends": ["@deenup/tsconfig/base.json"],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./src/*"],
+			"~app/*": ["./src/app/*"],
+			"~assets/*": ["./src/assets/*"],
+			"~components/*": ["./src/components/*"],
+			"~contexts/*": ["./src/contexts/*"],
+			"~configs/*": ["./src/configs/*"],
+			"~hooks/*": ["./src/hooks/*"],
+			"~i18n/*": ["./src/i18n/*"],
+			"~services/*": ["./src/services/*"],
+			"~stores/*": ["./src/stores/*"],
+			"~styles/*": ["./src/styles/*"],
+			"~types/*": ["./src/types/*"],
+			"~utils/*": ["./src/utils/*"]
+		},
+		"jsx": "react-native",
+		"tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+		"types": ["nativewind/types"]
+	},
+	"include": ["src", "*.ts", "*.js", ".expo/types/**/*.ts", "expo-env.d.ts"],
+	"exclude": ["node_modules"]
 }
