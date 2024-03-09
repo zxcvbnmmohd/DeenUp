@@ -4,11 +4,12 @@ import { useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
+import { router } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 
 import { MotiView } from "moti"
 
-import { Button, NavButton } from "~/components"
+import { Button } from "~/components"
 import FriendsModeOptions from "~/components/FriendsModeOptions"
 import { Modal } from "~/components/Modal"
 
@@ -70,10 +71,11 @@ export default function Page(): ReactNode {
 						label="Friends Mode"
 						onPress={() => setModalOpen(true)}
 					/>
-					<NavButton
-						href="/solo-mode"
+					<Button
 						label="Solo Mode"
-						className="bg-violet-700"
+						onPress={() => {
+							router.push("/solo-mode")
+						}}
 					/>
 				</MotiView>
 			</View>
