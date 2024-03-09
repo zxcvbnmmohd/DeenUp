@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from "react"
 
-interface State {
+type State = {
 	timeInSeconds: number
 	intervalId: NodeJS.Timeout | null
 }
 
-interface Return {
+type Return = {
 	seconds: number
 	minutes: number
 	start: () => void

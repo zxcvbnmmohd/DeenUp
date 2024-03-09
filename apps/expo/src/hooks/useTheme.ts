@@ -11,7 +11,7 @@ enum ThemeMode {
 	DARK,
 }
 
-interface State {
+type State = {
 	mode: ThemeMode
 	theme: Theme
 	loading: boolean

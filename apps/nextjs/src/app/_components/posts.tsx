@@ -156,6 +156,7 @@ export function PostCard(props: {
 
 export function PostCardSkeleton(props: { pulse?: boolean }) {
 	const { pulse = true } = props
+
 	return (
 		<div className="flex flex-row rounded-lg bg-muted p-4">
 			<div className="grow">

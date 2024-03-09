@@ -1,34 +1,39 @@
 import type { ReactNode } from "react"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { SafeAreaView, StyleSheet, Text, View } from "react-native"
 
 import { router } from "expo-router"
 
-import type { Question } from "~/types"
+import type { GameStore, SettingsStore } from "~/stores"
 
-import { questions } from "~/assets"
 import { Button } from "~/components"
 import QuestionHeader from "~/components/gameplay/QuestionHeader"
 import QuestionOption from "~/components/gameplay/QuestionOption"
-import { useTheme, useTimer } from "~/hooks"
-
-interface State {
-	questions: Question[]
-	currentQuestionIndex: number
-	didSelect: boolean
-	showResult: boolean
-}
+import { useGameStore, useSettingsStore } from "~/stores"
 
 export default function Page(): ReactNode {
-	const [states, setStates] = useState<State>({
-		questions: questions.sort(() => Math.random() - 0.5).slice(0, 5),
-		currentQuestionIndex: 0,
-		didSelect: false,
-		showResult: false,
-	})
-	const { theme } = useTheme()
-	const { minutes, seconds, start } = useTimer()
+	const theme = useSettingsStore((state: SettingsStore) => state.theme)
+	const minutes = useGameStore((state: GameStore) => state.minutes)
+	const seconds = useGameStore((state: GameStore) => state.seconds)
+	const start = useGameStore((state: GameStore) => state.start)
+	const stop = useGameStore((state: GameStore) => state.stop)
+	const currentQuestionIndex = useGameStore(
+		(state: GameStore) => state.currentQuestionIndex,
+	)
+	const selectedAnswer = useGameStore(
+		(state: GameStore) => state.selectedAnswer,
+	)
+	const showResult = useGameStore((state: GameStore) => state.showResult)
+	const questions = useGameStore((state: GameStore) => state.questions)
+	const selectAnswer = useGameStore((state: GameStore) => state.selectAnswer)
+	const answerQuestion = useGameStore(
+		(state: GameStore) => state.answerQuestion,
+	)
+	const nextQuestion = useGameStore((state: GameStore) => state.nextQuestion)
+	const resetSoloSession = useGameStore(
+		(state: GameStore) => state.resetSoloSession,
+	)
 
 	const styles = StyleSheet.create({
 		screen: {
@@ -72,52 +77,41 @@ export default function Page(): ReactNode {
 	})
 
 	useEffect(() => {
+		stop()
 		start()
+		resetSoloSession()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (
 		<SafeAreaView style={styles.screen}>
 			<QuestionHeader
-				index={states.currentQuestionIndex + 1}
-				length={states.questions.length}
+				index={currentQuestionIndex + 1}
+				length={questions.length}
 				minutes={minutes}
 				seconds={seconds}
 			/>
 			<View style={styles.body}>
 				<Text style={styles.question}>
-					{states.questions[states.currentQuestionIndex]?.question}
+					{questions[currentQuestionIndex]?.question}
 				</Text>
 				<View style={styles.options}>
-					{states.questions[states.currentQuestionIndex]?.options.map(
+					{questions[currentQuestionIndex]?.options.map(
 						(option, index) => (
 							<QuestionOption
 								key={index}
 								label={option}
-								isSelected={
-									states.didSelect &&
-									states.questions[
-										states.currentQuestionIndex
-									]?.userAnswer === option
-								}
-								showResult={states.showResult}
+								isSelected={selectedAnswer === option}
+								showResult={showResult}
 								isCorrect={
-									states.questions[
-										states.currentQuestionIndex
-									]?.correctAnswer === option
+									selectedAnswer ===
+									questions[currentQuestionIndex]
+										?.correctAnswer
 								}
 								onPress={() => {
-									const questions = states.questions
+									questions[index]!.userAnswer = option
 
-									questions[
-										states.currentQuestionIndex
-									]!.userAnswer = option
-
-									setStates({
-										...states,
-										questions,
-										didSelect: true,
-									})
+									selectAnswer({ answer: option })
 								}}
 							/>
 						),
@@ -125,60 +119,32 @@ export default function Page(): ReactNode {
 				</View>
 			</View>
 			<View style={styles.column}>
-				{states.questions.length - 1 === states.currentQuestionIndex ? (
-					<Button
-						label="Submit"
-						outline
-						onPress={() => {
-							if (states.didSelect === false) {
-								return
-							}
+				<Button
+					label={
+						questions.length - 1 === currentQuestionIndex
+							? "Submit"
+							: "Next"
+					}
+					outline
+					onPress={() => {
+						if (
+							!selectedAnswer ||
+							!questions[currentQuestionIndex]
+						) {
+							return
+						}
 
-							setStates({
-								...states,
-								showResult: true,
-							})
+						answerQuestion()
 
-							setTimeout(() => {
-								setStates({
-									...states,
-									didSelect: false,
-									showResult: false,
-								})
-
+						setTimeout(() => {
+							if (questions.length - 1 === currentQuestionIndex) {
 								router.push("/result/")
-							}, 1000)
-						}}
-					/>
-				) : (
-					<Button
-						label="Next"
-						outline
-						onPress={() => {
-							if (
-								states.questions[states.currentQuestionIndex]
-									?.userAnswer === undefined
-							) {
-								return
+							} else {
+								nextQuestion()
 							}
-
-							setStates({
-								...states,
-								showResult: true,
-							})
-
-							setTimeout(() => {
-								setStates({
-									...states,
-									currentQuestionIndex:
-										states.currentQuestionIndex + 1,
-									didSelect: false,
-									showResult: false,
-								})
-							}, 1000)
-						}}
-					/>
-				)}
+						}, 1000)
+					}}
+				/>
 				<Button label="Exit" onPress={() => router.back()} />
 			</View>
 		</SafeAreaView>

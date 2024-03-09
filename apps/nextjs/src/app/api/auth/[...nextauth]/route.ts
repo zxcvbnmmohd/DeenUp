@@ -43,6 +43,7 @@ export const GET = async (
 		const authResponse = await DEFAULT_GET(req)
 		const url = new URL(isExpoCallback.value)
 		url.searchParams.set("session_token", getToken(authResponse))
+
 		return NextResponse.redirect(url)
 	}
 

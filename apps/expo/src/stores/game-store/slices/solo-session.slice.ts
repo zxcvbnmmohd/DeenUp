@@ -5,18 +5,22 @@ import type { Question } from "~/types"
 
 import { randomQuestions } from "~/assets"
 
-interface SoloSessionStates {
+type SoloSessionStates = {
+	currentQuestionIndex: number
+	selectedAnswer: string | null
+	showResult: boolean
 	questions: Question[]
-	currentQuestion?: Question | null
-	skippedQuestions: Question[]
 	correctQuestions: Question[]
 	incorrectQuestions: Question[]
+	skippedQuestions: Question[]
 }
 
-interface SoloSessionActions {
-	initializeQuestions(): void
-	answerQuestion(questionId: string, answer: string): void
-	skipQuestion(questionId: string): void
+type SoloSessionActions = {
+	selectAnswer: (params: { answer: string }) => void
+	answerQuestion: () => void
+	skipQuestion: () => void
+	nextQuestion: () => void
+	resetSoloSession: () => void
 }
 
 export type SoloSessionSlice = SoloSessionStates & SoloSessionActions
@@ -28,39 +32,67 @@ const createSoloSessionSlice: StateCreator<
 	SoloSessionSlice
 > = (set, get) => {
 	return {
-		questions: [],
-		currentQuestion: null,
-		skippedQuestions: [],
+		currentQuestionIndex: 0,
+		selectedAnswer: null,
+		showResult: false,
+		questions: randomQuestions(10),
 		correctQuestions: [],
 		incorrectQuestions: [],
-		initializeQuestions: () => {
-			set({ questions: randomQuestions(10) })
+		skippedQuestions: [],
+		selectAnswer: (params: { answer: string }) => {
+			set({ selectedAnswer: params.answer })
 		},
-		answerQuestion: (questionId, answer) => {
-			const question = get().currentQuestion
+		answerQuestion: () => {
+			const { currentQuestionIndex, selectedAnswer, questions } = get()
+			const question = questions[currentQuestionIndex]
 
-			if (question && question.id === questionId) {
-				if (question.correctAnswer === answer) {
-					set((state: SoloSessionStates) => ({
-						correctQuestions: [...state.correctQuestions, question],
-					}))
+			if (!question) return
+			if (!selectedAnswer) return
 
-					return
-				}
-
+			if (question.correctAnswer === selectedAnswer) {
 				set((state: SoloSessionStates) => ({
-					incorrectQuestions: [...state.incorrectQuestions, question],
+					showResult: true,
+					correctQuestions: [...state.correctQuestions, question],
 				}))
+
+				return
 			}
+
+			set((state: SoloSessionStates) => ({
+				showResult: true,
+				incorrectQuestions: [...state.incorrectQuestions, question],
+			}))
 		},
-		skipQuestion: (questionId) => {
-			const question = get().currentQuestion
+		skipQuestion: () => {
+			const { questions, currentQuestionIndex } = get()
+			const question = questions[currentQuestionIndex]
 
-			if (question && question.id === questionId) {
-				set((state: SoloSessionStates) => ({
-					skippedQuestions: [...state.skippedQuestions, question],
-				}))
-			}
+			if (!question) return
+
+			set((state: SoloSessionStates) => ({
+				currentQuestionIndex: state.currentQuestionIndex + 1,
+				skippedQuestions: [...state.skippedQuestions, question],
+			}))
+		},
+		nextQuestion: () => {
+			const { currentQuestionIndex } = get()
+
+			set({
+				currentQuestionIndex: currentQuestionIndex + 1,
+				selectedAnswer: null,
+				showResult: false,
+			})
+		},
+		resetSoloSession: () => {
+			set({
+				currentQuestionIndex: 0,
+				selectedAnswer: null,
+				showResult: false,
+				questions: randomQuestions(10),
+				correctQuestions: [],
+				incorrectQuestions: [],
+				skippedQuestions: [],
+			})
 		},
 	}
 }

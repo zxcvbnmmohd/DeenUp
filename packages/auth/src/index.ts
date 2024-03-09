@@ -9,7 +9,7 @@ import { db, tableCreator } from "@deenup/db"
 export type { Session } from "next-auth"
 
 declare module "next-auth" {
-	interface Session {
+	type Session = {
 		user: {
 			id: string
 		} & DefaultSession["user"]

@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 import { useTheme } from "~/hooks"
 
-interface Props {
+type Props = {
 	minute: number
 	second: number
 }
