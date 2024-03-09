@@ -11,7 +11,7 @@ import LottieView from "lottie-react-native"
 import type { GameStore } from "~/stores"
 
 import Trophy from "~/assets/lottie/result-trophy.json"
-import { NavButton } from "~/components"
+import { Button } from "~/components"
 import { useGameStore } from "~/stores"
 
 type StatItemProps = {
@@ -50,11 +50,9 @@ export default function Page(): ReactNode {
 				className="absolute -z-10 flex size-full items-center  justify-start "
 			>
 				<View className="absolute top-40 size-96 rounded-3xl bg-red-400">
-					<NavButton
-						label="Check Correct Answer"
-						href={"/"}
-						className="absolute bottom-8 w-72 self-center rounded-2xl bg-red-300 shadow-none"
-					/>
+					<Link href="/">
+						<Button label="Check Correct Answer" />
+					</Link>
 				</View>
 				<LottieView
 					source={Trophy}
@@ -100,14 +98,14 @@ export default function Page(): ReactNode {
 					</View>
 				</View>
 				<View className="flex h-14 w-full flex-row gap-3 px-10">
-					<NavButton
-						className="flex-1 bg-violet-700"
-						label="Done"
-						href={"/"}
-						onPress={() => {
-							resetSoloSession()
-						}}
-					/>
+					<Link href="/">
+						<Button
+							label="Done"
+							onPress={() => {
+								resetSoloSession()
+							}}
+						/>
+					</Link>
 					<Pressable className="flex size-16  items-center justify-center  rounded-3xl border-4 border-gray-300  ">
 						<AntIcons name="sharealt" color={"black"} size={25} />
 					</Pressable>
