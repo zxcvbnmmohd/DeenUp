@@ -1,4 +1,4 @@
-export interface Theme {
+export type Theme = {
 	colors: {
 		primary: string
 		background: string
@@ -9,7 +9,7 @@ export interface Theme {
 	// Add more theme properties as needed
 }
 
-export interface Question {
+export type Question = {
 	id: string
 	question: string
 	options: string[]
@@ -17,22 +17,22 @@ export interface Question {
 	userAnswer: string
 }
 
-export interface PossibleAnswer {
+export type PossibleAnswer = {
 	userId: string
 	answer: string
 }
 
-export interface Player {
+export type Player = {
 	id: string
 }
 
-interface TimerState {
+type TimerState = {
 	timeInSeconds: number
 	minutes: number
 	seconds: number
 }
 
-interface TimerAction {
+type TimerAction = {
 	start: () => void
 	pause: () => void
 	stop: () => void

@@ -21,6 +21,7 @@ export const OPTIONS = () => {
 		status: 204,
 	})
 	setCorsHeaders(response)
+
 	return response
 }
 
@@ -40,6 +41,7 @@ const handler = auth(async (req) => {
 	})
 
 	setCorsHeaders(response)
+
 	return response
 })
 

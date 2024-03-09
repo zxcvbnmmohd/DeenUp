@@ -5,7 +5,7 @@ import { Text, TouchableOpacity } from "react-native"
 
 import { tv } from "tailwind-variants"
 
-interface Props {
+type Props = {
 	label: string
 	outline?: boolean
 	onPress?: ((event: GestureResponderEvent) => void) | undefined
@@ -14,17 +14,13 @@ interface Props {
 }
 
 const Button = (props: Props): React.ReactNode => {
-	const button = tv({
-		base: "h-16 items-center justify-center rounded-2xl bg-violet-700 font-medium text-white shadow-md",
-	})
-	//   const textStyles=tv({
-
-	//   })
 	return (
 		<TouchableOpacity
 			activeOpacity={0.8}
 			onPress={props.onPress}
-			className={button()}
+			className={tv({
+				base: "h-16 items-center justify-center rounded-2xl bg-violet-700 font-medium text-white shadow-md",
+			})()}
 		>
 			<Text className="text-lg font-bold text-white">{props.label}</Text>
 		</TouchableOpacity>

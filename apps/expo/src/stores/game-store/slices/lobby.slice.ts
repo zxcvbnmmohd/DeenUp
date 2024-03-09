@@ -3,13 +3,13 @@ import type { StateCreator } from "zustand"
 import type { GameStore } from "."
 import type { Player } from "~/types"
 
-interface LobbyStates {
-	players: Player[]
+type LobbyStates = {
 	lobbyCode: string | null
+	players: Player[]
 	isCreator: boolean
 }
 
-interface LobbyActions {
+type LobbyActions = {
 	setIsCreator: (isCreator: boolean) => void
 	createLobby: () => void
 	shareLobbyCode: () => void
@@ -23,8 +23,8 @@ const createLobbySlice: StateCreator<GameStore, [], [], LobbySlice> = (
 	set,
 	get,
 ) => ({
-	players: [],
 	lobbyCode: null,
+	players: [],
 	isCreator: false,
 	setIsCreator: (isCreator) => {
 		set({ isCreator })
@@ -55,7 +55,7 @@ const createLobbySlice: StateCreator<GameStore, [], [], LobbySlice> = (
 		set({ lobbyCode })
 	},
 	leaveLobby: () => {
-		set({ lobbyCode: null, isCreator: false, players: [] })
+		set({ lobbyCode: undefined, isCreator: false, players: [] })
 	},
 })
 

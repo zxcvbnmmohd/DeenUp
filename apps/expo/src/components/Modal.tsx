@@ -27,6 +27,7 @@ export const Modal = ({ isOpen, withInput, children, ...rest }: Props) => {
 			{children}
 		</View>
 	)
+
 	return (
 		<RModal
 			visible={isOpen}

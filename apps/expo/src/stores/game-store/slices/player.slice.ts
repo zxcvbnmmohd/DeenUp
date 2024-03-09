@@ -2,13 +2,13 @@ import type { StateCreator } from "zustand"
 
 import type { GameStore } from "."
 
-interface PlayerStates {
+type PlayerStates = {
 	name: string | null
 	selfie: string | null
 	hasProfile: boolean
 }
 
-interface PlayerActions {
+type PlayerActions = {
 	createProfile: (name: string, selfie: string) => void
 }
 

@@ -5,7 +5,7 @@ import type { Player, PossibleAnswer, Question } from "~/types"
 
 import { randomQuestions } from "~/assets"
 
-interface MultiplayerSessionStates {
+type MultiplayerSessionStates = {
 	id: string | null
 	sessionPlayers: Player[]
 	sessionQuestions: Question[]
@@ -13,7 +13,7 @@ interface MultiplayerSessionStates {
 	possibleAnswers: PossibleAnswer[]
 }
 
-interface MultiplayerSessionActions {
+type MultiplayerSessionActions = {
 	initializeSessionQuestions(): void
 	submitPossibleAnswer(usserId: string, answer: string): void
 	selectPossibleAnswer(answer: PossibleAnswer): void
@@ -30,8 +30,8 @@ const createMultiplayerSessionSlice: StateCreator<
 	MultiplayerSessionSlice
 > = (set, get) => {
 	return {
-		id: get().lobbyCode,
-		sessionPlayers: get().players,
+		id: null,
+		sessionPlayers: [],
 		sessionQuestions: [],
 		currentSessionQuestionIndex: 0,
 		possibleAnswers: [],

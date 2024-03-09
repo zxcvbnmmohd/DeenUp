@@ -8,15 +8,37 @@ import { Link, Stack } from "expo-router"
 import AntIcons from "@expo/vector-icons/AntDesign"
 import LottieView from "lottie-react-native"
 
-import Trophy from "~/assets/lottie/result-trophy.json"
-import { NavButton } from "~/components"
+import type { GameStore } from "~/stores"
 
-interface StatItemProps {
+import Trophy from "~/assets/lottie/result-trophy.json"
+import { Button } from "~/components"
+import { useGameStore } from "~/stores"
+
+type StatItemProps = {
 	label: string
 	value: string | number
 }
 
 export default function Page(): ReactNode {
+	const questions = useGameStore((state: GameStore) => state.questions)
+	const correctQuestions = useGameStore(
+		(state: GameStore) => state.correctQuestions,
+	)
+	const incorrectQuestions = useGameStore(
+		(state: GameStore) => state.incorrectQuestions,
+	)
+	const skippedQuestions = useGameStore(
+		(state: GameStore) => state.skippedQuestions,
+	)
+	const resetSoloSession = useGameStore(
+		(state: GameStore) => state.resetSoloSession,
+	)
+
+	const completedQuestions =
+		correctQuestions.length + incorrectQuestions.length
+	const totalQuestions = questions.length
+	const completion = Math.round((completedQuestions / totalQuestions) * 100)
+
 	return (
 		<SafeAreaView className="relative flex-1 bg-[#1F104A]">
 			<Stack.Screen options={{ title: "Results" }} />
@@ -28,11 +50,9 @@ export default function Page(): ReactNode {
 				className="absolute -z-10 flex size-full items-center  justify-start "
 			>
 				<View className="absolute top-40 size-96 rounded-3xl bg-red-400">
-					<NavButton
-						label="Check Correct Answer"
-						href={"/"}
-						className="absolute bottom-8 w-72 self-center rounded-2xl bg-red-300 shadow-none"
-					/>
+					<Link href="/">
+						<Button label="Check Correct Answer" />
+					</Link>
 				</View>
 				<LottieView
 					source={Trophy}
@@ -60,20 +80,32 @@ export default function Page(): ReactNode {
 
 				<View className="mt-96 flex w-full flex-row items-center justify-center px-10 ">
 					<View className="w-1/2 ">
-						<StatItem label="CORRECT ANSWER" value="7 questions" />
-						<StatItem label="SKIPPED" value={0} />
+						<StatItem
+							label="CORRECT ANSWER"
+							value={correctQuestions.length + " questions"}
+						/>
+						<StatItem
+							label="SKIPPED"
+							value={skippedQuestions.length}
+						/>
 					</View>
 					<View className="w-1/2">
-						<StatItem label="COMPLETION" value="80%" />
-						<StatItem label="INCORRECT ANSWER" value={7} />
+						<StatItem label="COMPLETION" value={completion + "%"} />
+						<StatItem
+							label="INCORRECT ANSWER"
+							value={incorrectQuestions.length + " questions"}
+						/>
 					</View>
 				</View>
 				<View className="flex h-14 w-full flex-row gap-3 px-10">
-					<NavButton
-						className="flex-1 bg-violet-700"
-						label="Done"
-						href={"/"}
-					/>
+					<Link href="/">
+						<Button
+							label="Done"
+							onPress={() => {
+								resetSoloSession()
+							}}
+						/>
+					</Link>
 					<Pressable className="flex size-16  items-center justify-center  rounded-3xl border-4 border-gray-300  ">
 						<AntIcons name="sharealt" color={"black"} size={25} />
 					</Pressable>

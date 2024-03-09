@@ -2,12 +2,12 @@ import type { StateCreator } from "zustand"
 
 import type { GameStore } from "."
 
-interface TimerStates {
-	timeInSeconds: number
-	intervalId: NodeJS.Timeout | null
+type TimerStates = {
+	seconds: number
+	minutes: number
 }
 
-interface TimerActions {
+type TimerActions = {
 	start: () => void
 	pause: () => void
 	stop: () => void
@@ -15,40 +15,32 @@ interface TimerActions {
 
 export type TimerSlice = TimerStates & TimerActions
 
-const createTimerSlice: StateCreator<GameStore, [], [], TimerSlice> = (
-	set,
-	get,
-) => {
-	return {
-		timeInSeconds: 0,
-		intervalId: null,
-		start: () => {
-			set((state) => ({
-				...state,
-				intervalId: setInterval(() => {
-					set((state) => ({
-						...state,
-						timeInSeconds: state.timeInSeconds + 1,
-					}))
-				}, 1000),
-			}))
-		},
-		pause: () => {
-			const { intervalId } = get()
+const createTimerSlice: StateCreator<GameStore, [], [], TimerSlice> = (set) => {
+	let intervalId: NodeJS.Timeout | undefined
 
-			if (intervalId) {
-				clearInterval(intervalId)
-				set((state) => ({
-					...state,
-					intervalId: null,
-				}))
-			}
+	return {
+		seconds: 0,
+		minutes: 0,
+		start: () => {
+			intervalId = setInterval(() => {
+				set((state) => {
+					const newSeconds = state.seconds + 1
+					const newMinutes = Math.floor(newSeconds / 60)
+
+					return {
+						...state,
+						seconds: newSeconds % 60,
+						minutes: state.minutes + newMinutes,
+					}
+				})
+			}, 1000)
 		},
+		pause: () => clearInterval(intervalId),
 		stop: () => {
-			get().pause()
-			set((state) => ({
-				...state,
-				timeInSeconds: 0,
+			clearInterval(intervalId)
+			set(() => ({
+				seconds: 0,
+				minutes: 0,
 			}))
 		},
 	}

@@ -7,7 +7,7 @@ import AntIcons from "@expo/vector-icons/AntDesign"
 
 import { Button } from "."
 
-interface Props {
+type Props = {
 	setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 export default function FriendsModeOptions({ setModalOpen }: Props) {
