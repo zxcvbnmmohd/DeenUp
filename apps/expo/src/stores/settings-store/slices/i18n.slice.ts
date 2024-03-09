@@ -4,11 +4,11 @@ import type { SettingsStore } from "."
 
 import { i18n } from "~/i18n"
 
-interface LanguageStates {
+type LanguageStates = {
 	currentLanguage: string
 }
 
-interface LanguageActions {
+type LanguageActions = {
 	changeLanguage: (language: string) => void
 	translate: (key: string) => string
 }

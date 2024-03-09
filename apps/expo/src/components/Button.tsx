@@ -5,7 +5,7 @@ import { Text, TouchableOpacity } from "react-native"
 
 import { tv } from "tailwind-variants"
 
-interface Props {
+type Props = {
 	label: string
 	outline?: boolean
 	onPress?: ((event: GestureResponderEvent) => void) | undefined

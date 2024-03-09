@@ -2,12 +2,12 @@ import type { StateCreator } from "zustand"
 
 import type { SettingsStore } from "."
 
-interface SoundStates {
+type SoundStates = {
 	isSoundEnabled: boolean
 	volume: number
 }
 
-interface SoundActions {
+type SoundActions = {
 	toggleSound: () => void
 	setVolume: (volume: number) => void
 }

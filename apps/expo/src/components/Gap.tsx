@@ -2,7 +2,7 @@ import type { ReactNode } from "react"
 
 import { StyleSheet, View } from "react-native"
 
-interface Props {
+type Props = {
 	height?: number
 	width?: number
 }

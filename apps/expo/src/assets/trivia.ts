@@ -165,6 +165,7 @@ const questions: Question[] = [
 
 const randomQuestions = (n: number): Question[] => {
 	const shuffledQuestions = questions.sort(() => Math.random() - 0.5)
+
 	return shuffledQuestions.slice(0, n)
 }
 

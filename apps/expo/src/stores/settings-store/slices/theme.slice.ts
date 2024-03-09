@@ -10,12 +10,12 @@ enum ThemeMode {
 	DARK,
 }
 
-interface ThemeStates {
+type ThemeStates = {
 	themeMode: ThemeMode
 	theme: Theme
 }
 
-interface ThemeActions {
+type ThemeActions = {
 	switchTheme: () => void
 }
 
