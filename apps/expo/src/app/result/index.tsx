@@ -15,6 +15,11 @@ import { Button } from "~/components"
 import { useGameStore } from "~/stores"
 
 type StatItemProps = {
+	styles: {
+		container: string
+		header: string
+		value: string
+	}
 	label: string
 	value: string | number
 }
@@ -26,13 +31,19 @@ export default function Page(): ReactNode {
 		headerText: "ml-6 text-2xl font-bold",
 		statsContainer:
 			"mt-96 flex w-full flex-row items-center justify-center px-10",
-		bottomBtnsContainer: "flex h-14 flex-row gap-3 px-12",
-		checkAnswersBtn: "absolute bottom-4 mx-10 rounded-xl",
+		bottomButtonsContainer: "flex h-14 flex-row gap-3 px-12",
+		checkAnswersButton: "absolute bottom-4 mx-10 rounded-xl",
 		shareButton:
 			"flex size-16  items-center justify-center rounded-3xl border-4 border-gray-300",
 		animationContainer:
 			"absolute -z-10 flex size-full items-center  justify-start",
-		animationContainerBg: "absolute top-40 size-96 rounded-3xl bg-primary",
+		animationContainerBackground:
+			"absolute top-40 size-96 rounded-3xl bg-primary",
+		statItem: {
+			container: "mb-6 flex items-start gap-4",
+			header: "text-base font-semibold text-gray-400",
+			value: "text-2xl font-bold",
+		},
 	}
 	const questions = useGameStore((state: GameStore) => state.questions)
 	const correctQuestions = useGameStore(
@@ -48,19 +59,15 @@ export default function Page(): ReactNode {
 		(state: GameStore) => state.resetSoloSession,
 	)
 
-	const completedQuestions =
-		correctQuestions.length + incorrectQuestions.length
 	const totalQuestions = questions.length
-	const completion = Math.round((completedQuestions / totalQuestions) * 100)
 
 	return (
 		<SafeAreaView>
 			<Stack.Screen options={{ title: "Results" }} />
-
 			<View className={styles.animationContainer}>
-				<View className={styles.animationContainerBg}>
+				<View className={styles.animationContainerBackground}>
 					<Button
-						className={styles.checkAnswersBtn}
+						className={styles.checkAnswersButton}
 						size="lg"
 						label="Check Correct Answer"
 						color="accent"
@@ -95,23 +102,31 @@ export default function Page(): ReactNode {
 				<View className={styles.statsContainer}>
 					<View className="w-1/2 ">
 						<StatItem
+							styles={styles.statItem}
 							label="CORRECT ANSWER"
 							value={correctQuestions.length + " questions"}
 						/>
 						<StatItem
+							styles={styles.statItem}
 							label="SKIPPED"
 							value={skippedQuestions.length}
 						/>
 					</View>
 					<View className="w-1/2">
-						<StatItem label="COMPLETION" value={completion + "%"} />
 						<StatItem
+							styles={styles.statItem}
+							label="TOTAL QUESTIONS"
+							value={totalQuestions}
+						/>
+
+						<StatItem
+							styles={styles.statItem}
 							label="INCORRECT ANSWER"
 							value={incorrectQuestions.length + " questions"}
 						/>
 					</View>
 				</View>
-				<View className={"flex h-14 flex-row gap-3 px-12"}>
+				<View className={styles.bottomButtonsContainer}>
 					<Button
 						className=""
 						color="primary"
@@ -132,9 +147,9 @@ export default function Page(): ReactNode {
 	)
 }
 
-const StatItem: React.FC<StatItemProps> = ({ label, value }) => (
-	<View className="mb-6 flex items-start gap-4 ">
-		<Text className="text-base font-semibold text-gray-400">{label}</Text>
-		<Text className="text-2xl font-bold">{value}</Text>
+const StatItem: React.FC<StatItemProps> = ({ styles, label, value }) => (
+	<View className={styles.container}>
+		<Text className={styles.header}>{label}</Text>
+		<Text className={styles.value}>{value}</Text>
 	</View>
 )

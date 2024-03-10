@@ -35,8 +35,9 @@ export default function Page(): ReactNode {
 	})
 	const styles = {
 		body: "flex h-full flex-col justify-around p-4",
-		lgooContainer: "flex-1 items-center justify-center",
+		logoContainer: "flex-1 items-center justify-center",
 		logo: "text-8xl font-bold",
+		logoPrimary: "text-8xl font-bold text-primary",
 	}
 
 	return (
@@ -46,7 +47,7 @@ export default function Page(): ReactNode {
 				<FriendsModeOptions setModalOpen={setModalOpen} />
 			</Modal>
 			<View className={styles.body}>
-				<View className={styles.lgooContainer}>
+				<View className={styles.logoContainer}>
 					<Text className={styles.logo}>
 						Deen
 						<MotiView
@@ -59,11 +60,7 @@ export default function Page(): ReactNode {
 								scale: { type: "spring", delay: 350 },
 							}}
 						>
-							<Text
-								className={styles.logo + " " + "text-primary"}
-							>
-								Up!
-							</Text>
+							<Text className={styles.logoPrimary}>Up!</Text>
 						</MotiView>
 					</Text>
 				</View>

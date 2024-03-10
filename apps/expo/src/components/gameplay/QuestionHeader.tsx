@@ -4,7 +4,6 @@ import { Text, View } from "react-native"
 import { ProgressBar } from "react-native-paper"
 
 import { Timer } from "~/components"
-import { useTheme } from "~/hooks"
 
 const QuestionHeader = ({
 	index,
@@ -17,8 +16,6 @@ const QuestionHeader = ({
 	minutes: number
 	seconds: number
 }): ReactNode => {
-	const { theme } = useTheme()
-
 	const styles = {
 		base: "py-12 flex-col items-stretch px-10",
 		row: "mb-2 flex-row items-center justify-between",
@@ -33,8 +30,8 @@ const QuestionHeader = ({
 				<Timer minute={minutes} second={seconds} />
 			</View>
 			<ProgressBar
+				color="#03dac6"
 				progress={index / length}
-				color={theme.colors.accent}
 				className={styles.progressBar}
 			/>
 		</View>
