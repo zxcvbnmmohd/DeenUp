@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 
 import { useEffect } from "react"
-import { SafeAreaView, StyleSheet, Text, View } from "react-native"
+import { SafeAreaView, Text, View } from "react-native"
 
 import { router } from "expo-router"
 
@@ -35,47 +35,6 @@ export default function Page(): ReactNode {
 		(state: GameStore) => state.resetSoloSession,
 	)
 
-	const styles = StyleSheet.create({
-		screen: {
-			flex: 1,
-			flexDirection: "column",
-			alignItems: "stretch",
-			justifyContent: "space-between",
-			backgroundColor: theme.colors.primary,
-		},
-		body: {
-			flex: 1,
-			flexGrow: 1,
-			flexDirection: "column",
-			alignItems: "stretch",
-			justifyContent: "space-between",
-			padding: 25.0,
-			marginHorizontal: 25.0,
-			marginBottom: 25.0,
-			backgroundColor: "#FFFFFF",
-			borderRadius: 5.0,
-			shadowColor: theme.colors.background,
-			shadowOffset: {
-				width: 10.0,
-				height: 5.0,
-			},
-		},
-		question: {
-			textAlign: "left",
-			fontSize: 24.0,
-			fontWeight: "500",
-		},
-		options: {
-			gap: 15.0,
-		},
-		column: {
-			flexDirection: "column",
-			alignItems: "stretch",
-			gap: 15.0,
-			paddingHorizontal: 25.0,
-		},
-	})
-
 	useEffect(() => {
 		stop()
 		start()
@@ -83,19 +42,35 @@ export default function Page(): ReactNode {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
+	const styles = {
+		screen: "flex flex-col items-stretch justify-between bg-primary",
+		body: "flex flex-col flex-grow justify-around items-stretch p-12 mx-6 mb-2 bg-white rounded-md shadow-md shadow-offset-x-10 shadow-offset-y-5",
+		question: "text-left text-2xl font-bold",
+		options: "gap-6",
+		column: "flex-col items-stretch gap-8 px-8",
+	}
+
 	return (
-		<SafeAreaView style={styles.screen}>
+		<SafeAreaView
+			style={{
+				flex: 1,
+				flexDirection: "column",
+				alignItems: "stretch",
+				justifyContent: "space-between",
+				backgroundColor: theme.colors.primary,
+			}}
+		>
 			<QuestionHeader
 				index={currentQuestionIndex + 1}
 				length={questions.length}
 				minutes={minutes}
 				seconds={seconds}
 			/>
-			<View style={styles.body}>
-				<Text style={styles.question}>
+			<View className={styles.body}>
+				<Text className={styles.question}>
 					{questions[currentQuestionIndex]?.question}
 				</Text>
-				<View style={styles.options}>
+				<View className={styles.options}>
 					{questions[currentQuestionIndex]?.options.map(
 						(option, index) => (
 							<QuestionOption
@@ -110,7 +85,6 @@ export default function Page(): ReactNode {
 								}
 								onPress={() => {
 									questions[index]!.userAnswer = option
-
 									selectAnswer({ answer: option })
 								}}
 							/>
@@ -118,8 +92,9 @@ export default function Page(): ReactNode {
 					)}
 				</View>
 			</View>
-			<View style={styles.column}>
+			<View className={styles.column}>
 				<Button
+					size="lg"
 					label={
 						questions.length - 1 === currentQuestionIndex
 							? "Submit"
@@ -145,7 +120,7 @@ export default function Page(): ReactNode {
 						}, 1000)
 					}}
 				/>
-				<Button label="Exit" onPress={() => router.back()} />
+				<Button size="lg" label="Exit" onPress={() => router.back()} />
 			</View>
 		</SafeAreaView>
 	)

@@ -30,10 +30,14 @@ export default function FriendsModeOptions({ setModalOpen }: Props) {
 				<AntIcons name="close" color={"indigo"} size={20} />
 			</Pressable>
 			<Button
+				size="lg"
+				color="primary"
 				label="Join Game"
 				onPress={() => navigateAndClose("Join Game")}
 			/>
 			<Button
+				size="lg"
+				color="primary"
 				label="Create Game"
 				onPress={() => navigateAndClose("Create Game")}
 			/>

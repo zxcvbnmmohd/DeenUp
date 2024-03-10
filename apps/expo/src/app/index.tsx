@@ -54,7 +54,7 @@ export default function Page(): ReactNode {
 								scale: { type: "spring", delay: 350 },
 							}}
 						>
-							<Text className="text-8xl font-bold text-violet-700">
+							<Text className="text-8xl font-bold text-primary">
 								Up!
 							</Text>
 						</MotiView>
@@ -68,10 +68,14 @@ export default function Page(): ReactNode {
 					transition={{ type: "timing", delay: 500 }}
 				>
 					<Button
+						color="primary"
+						size="lg"
 						label="Friends Mode"
 						onPress={() => setModalOpen(true)}
 					/>
 					<Button
+						color="primary"
+						size="lg"
 						label="Solo Mode"
 						onPress={() => {
 							router.push("/solo-mode")
