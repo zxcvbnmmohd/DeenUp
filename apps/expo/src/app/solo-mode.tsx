@@ -47,7 +47,7 @@ export default function Page(): ReactNode {
 		body: "flex flex-col flex-grow justify-around items-stretch p-12 mx-6 mb-2 bg-white rounded-md shadow-md shadow-offset-x-10 shadow-offset-y-5",
 		question: "text-left text-2xl font-bold",
 		options: "gap-6",
-		column: "flex-col items-stretch gap-8 px-8",
+		column: "flex flex-col gap-2 px-8 items-center ",
 	}
 
 	return (
@@ -95,6 +95,7 @@ export default function Page(): ReactNode {
 			<View className={styles.column}>
 				<Button
 					size="lg"
+					color="accent"
 					label={
 						questions.length - 1 === currentQuestionIndex
 							? "Submit"
@@ -108,7 +109,6 @@ export default function Page(): ReactNode {
 						) {
 							return
 						}
-
 						answerQuestion()
 
 						setTimeout(() => {
@@ -120,7 +120,12 @@ export default function Page(): ReactNode {
 						}, 1000)
 					}}
 				/>
-				<Button size="lg" label="Exit" onPress={() => router.back()} />
+				<Button
+					color="outline"
+					size="lg"
+					label="Exit"
+					onPress={() => router.back()}
+				/>
 			</View>
 		</SafeAreaView>
 	)

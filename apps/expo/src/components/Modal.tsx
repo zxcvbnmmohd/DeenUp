@@ -15,17 +15,19 @@ type Props = ModalProps & {
 }
 
 export const Modal = ({ isOpen, withInput, children, ...rest }: Props) => {
+	const styles = {
+		keyoardAvoid: "flex-1 items-center justify-center bg-zinc-900/40 px-3",
+		container: "flex-1 items-center justify-center bg-zinc-900/40 px-3",
+	}
 	const content = withInput ? (
 		<KeyboardAvoidingView
-			className="flex-1 items-center justify-center bg-zinc-900/40 px-3"
+			className={styles.keyoardAvoid}
 			behavior={Platform.OS === "ios" ? "padding" : "height"}
 		>
 			{children}
 		</KeyboardAvoidingView>
 	) : (
-		<View className="flex-1 items-center justify-center bg-zinc-900/40 px-3">
-			{children}
-		</View>
+		<View className={styles.container}>{children}</View>
 	)
 
 	return (

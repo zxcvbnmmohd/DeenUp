@@ -1,11 +1,9 @@
 import type { ReactNode } from "react"
 import type { GestureResponderEvent } from "react-native"
 
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Text, TouchableOpacity, View } from "react-native"
 
 import { MaterialCommunityIcons } from "@expo/vector-icons"
-
-import { useTheme } from "~/hooks"
 
 const QuestionOption = ({
 	label,
@@ -20,51 +18,24 @@ const QuestionOption = ({
 	isCorrect: boolean
 	onPress?: ((event: GestureResponderEvent) => void) | undefined
 }): ReactNode => {
-	const { theme } = useTheme()
+	const borderStyle =
+		isSelected && showResult
+			? `border-${isCorrect ? "green" : "red"}-500`
+			: ""
 
-	const borderColor = isCorrect ? "#00D30A" : "#FF0200"
-
-	const styles = StyleSheet.create({
-		card: {
-			flexDirection: "row",
-			alignItems: "center",
-			justifyContent: "space-between",
-			paddingHorizontal: 25.0,
-			paddingVertical: 20.0,
-			backgroundColor: "#F2F2F2",
-			borderRadius: 5.0,
-			borderColor: isSelected
-				? showResult
-					? borderColor
-					: "#8E9FBF"
-				: "#F2F2F2",
-			borderWidth: 2.5,
-			shadowColor: theme.colors.surface,
-			shadowOffset: {
-				width: 10.0,
-				height: 5.0,
-			},
-		},
-		text: {
-			color: "#8E9FBF",
-			fontSize: 22.0,
-			fontWeight: "600",
-		},
-		circle: {
-			borderWidth: 2.0,
-			borderColor: borderColor,
-			borderRadius: 50.0,
-			alignItems: "center",
-			justifyContent: "center",
-			padding: 2.0,
-		},
-	})
+	const styles = {
+		card: `row items-center justify-between py-6 rounded-xl bg-gray-100 ${isSelected ? "border" : ""} ${borderStyle}`,
+		text: "text-gray-500 font-semibold text-xl",
+		circle: `border-2 rounded-full items-center justify-center p-2 absolute right-2 bottom-2 ${
+			isCorrect ? "border-green-500" : "border-red-500"
+		}`,
+	}
 
 	return (
-		<TouchableOpacity style={styles.card} onPress={onPress}>
-			<Text style={styles.text}>{label}</Text>
+		<TouchableOpacity className={styles.card} onPress={onPress}>
+			<Text className={styles.text}>{label}</Text>
 			{isSelected && showResult && (
-				<View style={styles.circle}>
+				<View className={styles.circle}>
 					<MaterialCommunityIcons
 						name={isCorrect ? "check" : "close"}
 						size={18}
@@ -75,4 +46,5 @@ const QuestionOption = ({
 		</TouchableOpacity>
 	)
 }
+
 export default QuestionOption

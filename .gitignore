@@ -20,7 +20,6 @@ next-env.d.ts
 # expo
 .expo/
 dist/
-expo-env.d.ts
 apps/expo/.gitignore
 
 # production

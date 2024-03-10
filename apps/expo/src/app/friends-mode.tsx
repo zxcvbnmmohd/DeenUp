@@ -9,11 +9,11 @@ export default function Page(): ReactNode {
 	const isPresented = router.canGoBack()
 
 	return (
-		<SafeAreaView className="bg-[#1F104A]">
+		<SafeAreaView>
 			<Stack.Screen
 				options={{ title: "Friends Mode", presentation: "modal" }}
 			/>
-			<View className="flex-col items-center  gap-3">
+			<View className="flex-col items-center gap-3">
 				{!isPresented && <Link href="../">Dismiss</Link>}
 			</View>
 		</SafeAreaView>
