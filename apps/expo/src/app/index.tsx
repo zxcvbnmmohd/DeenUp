@@ -15,7 +15,7 @@ import { Modal } from "~/components/Modal"
 
 export default function Page(): ReactNode {
 	const [isModalOpen, setModalOpen] = useState(false)
-	const styles = StyleSheet.create({
+	const motiStyles = StyleSheet.create({
 		logo: {
 			flexDirection: "column",
 			justifyContent: "center",
@@ -33,6 +33,12 @@ export default function Page(): ReactNode {
 			height: "auto",
 		},
 	})
+	const styles = {
+		body: "flex h-full flex-col justify-around p-4",
+		logoContainer: "flex-1 items-center justify-center",
+		logo: "text-8xl font-bold",
+		logoPrimary: "text-8xl font-bold text-primary",
+	}
 
 	return (
 		<SafeAreaView>
@@ -40,12 +46,12 @@ export default function Page(): ReactNode {
 			<Modal setModalOpen={setModalOpen} isOpen={isModalOpen}>
 				<FriendsModeOptions setModalOpen={setModalOpen} />
 			</Modal>
-			<View className="flex h-full flex-col justify-around p-4">
-				<View className="flex-1 items-center justify-center">
-					<Text className="text-8xl font-bold">
+			<View className={styles.body}>
+				<View className={styles.logoContainer}>
+					<Text className={styles.logo}>
 						Deen
 						<MotiView
-							style={styles.logo}
+							style={motiStyles.logo}
 							from={{ opacity: 0, translateY: 200, scale: 0.5 }}
 							animate={{ opacity: 1, translateY: 0, scale: 1 }}
 							transition={{
@@ -54,9 +60,7 @@ export default function Page(): ReactNode {
 								scale: { type: "spring", delay: 350 },
 							}}
 						>
-							<Text className="text-8xl font-bold text-violet-700">
-								Up!
-							</Text>
+							<Text className={styles.logoPrimary}>Up!</Text>
 						</MotiView>
 					</Text>
 				</View>
@@ -64,14 +68,18 @@ export default function Page(): ReactNode {
 				<MotiView
 					from={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
-					style={styles.container}
+					style={motiStyles.container}
 					transition={{ type: "timing", delay: 500 }}
 				>
 					<Button
+						color="primary"
+						size="xl"
 						label="Friends Mode"
 						onPress={() => setModalOpen(true)}
 					/>
 					<Button
+						color="primary"
+						size="xl"
 						label="Solo Mode"
 						onPress={() => {
 							router.push("/solo-mode")

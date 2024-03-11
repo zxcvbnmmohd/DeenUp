@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5fea7c11-43e2-457e-a474-e058847dbb69" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/app/friends-mode.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/app/friends-mode.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/app/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/app/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/app/result/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/app/result/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/app/solo-mode.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/app/solo-mode.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/assets/trivia.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/assets/trivia.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/components/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/components/Button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/components/FriendsModeOptions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/components/FriendsModeOptions.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/components/Gap.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/components/Gap.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/components/Modal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/components/Modal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/components/NavButton.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/components/Timer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/components/Timer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/components/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/components/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/hooks/useTheme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/hooks/useTheme.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/hooks/useTimer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/hooks/useTimer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/stores/game-store/slices/lobby.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/stores/game-store/slices/lobby.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/stores/game-store/slices/multiplayer-session.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/stores/game-store/slices/multiplayer-session.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/stores/game-store/slices/player.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/stores/game-store/slices/player.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/stores/game-store/slices/solo-session.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/stores/game-store/slices/solo-session.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/stores/game-store/slices/timer.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/stores/game-store/slices/timer.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/stores/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/stores/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/stores/settings-store/slices/i18n.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/stores/settings-store/slices/i18n.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/stores/settings-store/slices/sound.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/stores/settings-store/slices/sound.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/stores/settings-store/slices/theme.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/stores/settings-store/slices/theme.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/types/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/src/utils/api.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/src/utils/api.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/expo/tailwind.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/expo/tailwind.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/nextjs/src/app/_components/auth-showcase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/nextjs/src/app/_components/auth-showcase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/nextjs/src/app/_components/posts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/nextjs/src/app/_components/posts.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/nextjs/src/app/api/auth/[...nextauth]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/nextjs/src/app/api/auth/[...nextauth]/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/nextjs/src/app/api/trpc/[trpc]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/nextjs/src/app/api/trpc/[trpc]/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/nextjs/src/trpc/react.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/nextjs/src/trpc/react.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api/src/trpc.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api/src/trpc.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/auth/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/auth/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ui/src/button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/ui/src/button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ui/src/form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/ui/src/form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tooling/eslint/base.js" beforeDir="false" afterPath="$PROJECT_DIR$/tooling/eslint/base.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tooling/tailwind/native.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tooling/tailwind/native.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2dTG6bsE5qsmFc4fO6HVSsq8iYo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "Merging feature/4-apply-tailwind-theme-system-to-appwide"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5fea7c11-43e2-457e-a474-e058847dbb69" name="Changes" comment="" />
+      <created>1710024482434</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1710024482434</updated>
+    </task>
+    <servers />
+  </component>
+</project>

@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 import { Pressable, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
-import { Link, Stack } from "expo-router"
+import { Link, router, Stack } from "expo-router"
 
 import AntIcons from "@expo/vector-icons/AntDesign"
 import LottieView from "lottie-react-native"
@@ -15,11 +15,36 @@ import { Button } from "~/components"
 import { useGameStore } from "~/stores"
 
 type StatItemProps = {
+	styles: {
+		container: string
+		header: string
+		value: string
+	}
 	label: string
 	value: string | number
 }
 
 export default function Page(): ReactNode {
+	const styles = {
+		body: "flex size-full flex-col items-center justify-between",
+		headerContainer: "flex w-full flex-row items-end justify-between p-4",
+		headerText: "ml-6 text-2xl font-bold",
+		statsContainer:
+			"mt-96 flex w-full flex-row items-center justify-center px-10",
+		bottomButtonsContainer: "flex h-14 flex-row gap-3 px-12",
+		checkAnswersButton: "absolute bottom-4 mx-10 rounded-xl",
+		shareButton:
+			"flex size-16  items-center justify-center rounded-3xl border-4 border-gray-300",
+		animationContainer:
+			"absolute -z-10 flex size-full items-center  justify-start",
+		animationContainerBackground:
+			"absolute top-40 size-96 rounded-3xl bg-primary",
+		statItem: {
+			container: "mb-6 flex items-start gap-4",
+			header: "text-base font-semibold text-gray-400",
+			value: "text-2xl font-bold",
+		},
+	}
 	const questions = useGameStore((state: GameStore) => state.questions)
 	const correctQuestions = useGameStore(
 		(state: GameStore) => state.correctQuestions,
@@ -34,25 +59,23 @@ export default function Page(): ReactNode {
 		(state: GameStore) => state.resetSoloSession,
 	)
 
-	const completedQuestions =
-		correctQuestions.length + incorrectQuestions.length
 	const totalQuestions = questions.length
-	const completion = Math.round((completedQuestions / totalQuestions) * 100)
 
 	return (
-		<SafeAreaView className="relative flex-1 bg-[#1F104A]">
+		<SafeAreaView>
 			<Stack.Screen options={{ title: "Results" }} />
-
-			<View
-				style={{
-					alignItems: "center",
-				}}
-				className="absolute -z-10 flex size-full items-center  justify-start "
-			>
-				<View className="absolute top-40 size-96 rounded-3xl bg-red-400">
-					<Link href="/">
-						<Button label="Check Correct Answer" />
-					</Link>
+			<View className={styles.animationContainer}>
+				<View className={styles.animationContainerBackground}>
+					<Button
+						className={styles.checkAnswersButton}
+						size="lg"
+						label="Check Correct Answer"
+						color="accent"
+						onPress={() => {
+							console.log("correct")
+							router.push("/")
+						}}
+					/>
 				</View>
 				<LottieView
 					source={Trophy}
@@ -65,12 +88,10 @@ export default function Page(): ReactNode {
 					}}
 				/>
 			</View>
-			<View className="flex size-full flex-col items-center justify-between  ">
-				<View className="flex w-full flex-row items-end justify-between  p-4">
+			<View className={styles.body}>
+				<View className={styles.headerContainer}>
 					<View></View>
-					<Text className="ml-6 text-2xl font-bold">
-						Congratulations!
-					</Text>
+					<Text className={styles.headerText}>Congratulations!</Text>
 					<Link href="/" asChild>
 						<Pressable>
 							<AntIcons name="close" color={"indigo"} size={25} />
@@ -78,35 +99,46 @@ export default function Page(): ReactNode {
 					</Link>
 				</View>
 
-				<View className="mt-96 flex w-full flex-row items-center justify-center px-10 ">
+				<View className={styles.statsContainer}>
 					<View className="w-1/2 ">
 						<StatItem
+							styles={styles.statItem}
 							label="CORRECT ANSWER"
 							value={correctQuestions.length + " questions"}
 						/>
 						<StatItem
+							styles={styles.statItem}
 							label="SKIPPED"
 							value={skippedQuestions.length}
 						/>
 					</View>
 					<View className="w-1/2">
-						<StatItem label="COMPLETION" value={completion + "%"} />
 						<StatItem
+							styles={styles.statItem}
+							label="TOTAL QUESTIONS"
+							value={totalQuestions}
+						/>
+
+						<StatItem
+							styles={styles.statItem}
 							label="INCORRECT ANSWER"
 							value={incorrectQuestions.length + " questions"}
 						/>
 					</View>
 				</View>
-				<View className="flex h-14 w-full flex-row gap-3 px-10">
-					<Link href="/">
-						<Button
-							label="Done"
-							onPress={() => {
-								resetSoloSession()
-							}}
-						/>
-					</Link>
-					<Pressable className="flex size-16  items-center justify-center  rounded-3xl border-4 border-gray-300  ">
+				<View className={styles.bottomButtonsContainer}>
+					<Button
+						className=""
+						color="primary"
+						size="lg"
+						label="Done"
+						onPress={() => {
+							resetSoloSession()
+							router.push("/")
+						}}
+					/>
+
+					<Pressable className={styles.shareButton}>
 						<AntIcons name="sharealt" color={"black"} size={25} />
 					</Pressable>
 				</View>
@@ -115,9 +147,9 @@ export default function Page(): ReactNode {
 	)
 }
 
-const StatItem: React.FC<StatItemProps> = ({ label, value }) => (
-	<View className="mb-6 flex items-start gap-4 ">
-		<Text className="text-base font-semibold text-gray-400">{label}</Text>
-		<Text className="text-2xl font-bold">{value}</Text>
+const StatItem: React.FC<StatItemProps> = ({ styles, label, value }) => (
+	<View className={styles.container}>
+		<Text className={styles.header}>{label}</Text>
+		<Text className={styles.value}>{value}</Text>
 	</View>
 )

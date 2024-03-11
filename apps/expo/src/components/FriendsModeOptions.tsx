@@ -11,6 +11,11 @@ type Props = {
 	setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 export default function FriendsModeOptions({ setModalOpen }: Props) {
+	const styles = {
+		container:
+			"flex w-full items-center gap-4 rounded-3xl bg-white p-14 shadow-none ",
+		closeBtn: "absolute right-4 top-2 rounded-full shadow ",
+	}
 	const navigateAndClose = (navigateTo: string) => {
 		if (navigateTo === "Create Game") {
 			router.push("/create-game")
@@ -22,18 +27,22 @@ export default function FriendsModeOptions({ setModalOpen }: Props) {
 	}
 
 	return (
-		<View className="flex w-full gap-4 rounded-3xl bg-white p-11 shadow-none">
+		<View className={styles.container}>
 			<Pressable
 				onPress={() => setModalOpen(false)}
-				className="absolute right-4 top-2 rounded-full shadow "
+				className={styles.closeBtn}
 			>
-				<AntIcons name="close" color={"indigo"} size={20} />
+				<AntIcons name="close" color={"indigo"} size={32} />
 			</Pressable>
 			<Button
+				size="xl"
+				color="primary"
 				label="Join Game"
 				onPress={() => navigateAndClose("Join Game")}
 			/>
 			<Button
+				size="xl"
+				color="primary"
 				label="Create Game"
 				onPress={() => navigateAndClose("Create Game")}
 			/>
