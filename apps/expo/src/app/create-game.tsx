@@ -21,9 +21,10 @@ export default function CreateGame(): ReactNode {
 	const setIsCreator = useGameStore((state: GameStore) => state.setIsCreator)
 
 	useEffect(() => {
+		if (code) return
 		setIsCreator(true)
 		createLobby()
-	}, [])
+	}, [createLobby, setIsCreator, code])
 
 	const handleExit = () => {
 		leaveLobby()
