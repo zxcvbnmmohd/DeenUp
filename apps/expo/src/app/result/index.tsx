@@ -26,7 +26,7 @@ type StatItemProps = {
 
 export default function Page(): ReactNode {
 	const styles = {
-		body: "flex size-full flex-col items-center justify-between",
+		body: "flex size-full flex-col items-center justify-around",
 		headerContainer: "flex w-full flex-row items-end justify-between p-4",
 		headerText: "ml-6 text-2xl font-bold",
 		statsContainer:
