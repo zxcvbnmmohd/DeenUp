@@ -9,7 +9,7 @@ import { StatusBar } from "expo-status-bar"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 import { Button } from "~/components"
-import { useGameStore } from "~/stores"
+import { useGameStore, useSettingsStore } from "~/stores"
 
 type CodeInputProps = {
 	code: string[]
@@ -17,12 +17,19 @@ type CodeInputProps = {
 	inputRefs: React.MutableRefObject<(TextInput | null)[]>
 }
 
+type States = {
+	inputCode: string[]
+}
+
 export default function CreateGame() {
-	const codeLength = 8
+	const CODE_LENGTH = 8
+	const translate = useSettingsStore((state) => state.translate)
 	const leaveLobby = useGameStore((state) => state.leaveLobby)
-	const [inputCode, setInputCode] = useState<string[]>(
-		Array(codeLength).fill(""),
-	)
+	const joinLobby = useGameStore((state) => state.joinLobby)
+
+	const [states, setStates] = useState<States>({
+		inputCode: Array(CODE_LENGTH).fill("") as string[],
+	})
 
 	const inputRefs = useRef<(TextInput | null)[]>([])
 
@@ -30,24 +37,35 @@ export default function CreateGame() {
 		leaveLobby()
 		router.dismiss()
 	}
+
 	const handleCodeChange = (text: string, index: number) => {
-		const newCode = [...inputCode]
+		const newCode = [...states.inputCode]
 		newCode[index] = text
-		setInputCode(newCode)
+
+		setStates((states) => ({
+			...states,
+			inputCode: newCode,
+		}))
+
 		if (text === "" && index > 0) {
 			inputRefs.current[index - 1]?.focus()
-		} else if (text !== "" && index < codeLength - 1) {
+		} else if (text !== "" && index < CODE_LENGTH - 1) {
 			inputRefs.current[index + 1]?.focus()
 		}
 
 		if (text.length > 1) {
 			const codeArray = text.split("")
+
 			codeArray.forEach((value: string, index: number) => {
-				if (index < codeLength) {
+				if (index < CODE_LENGTH) {
 					newCode[index] = value
 				}
 			})
-			setInputCode(newCode)
+
+			setStates((states) => ({
+				...states,
+				inputCode: newCode,
+			}))
 		}
 
 		if (text.length === 0 && index > 0) {
@@ -56,32 +74,34 @@ export default function CreateGame() {
 	}
 
 	const handleContinue = () => {
+		const inputCode = states.inputCode
+
 		if (inputCode.some((digit) => digit === "")) {
-			alert("Please fill in all the digits")
+			alert(translate("joinGameAlert"))
 
 			return
 		}
 
-		alert(`Continue with: ${inputCode.join("")}`)
+		joinLobby(inputCode.join(""))
 	}
 
 	const handlePasteFromClipboard = async () => {
 		try {
 			const text: string = await Clipboard.getStringAsync()
-			const newCode: string[] = [...inputCode]
+			const newCode: string[] = [...states.inputCode]
+			const sourceText =
+				text.length > CODE_LENGTH
+					? text.substring(0, CODE_LENGTH)
+					: text
 
-			if (text.length > codeLength) {
-				const clippedText = text.substring(0, codeLength)
-				clippedText.split("").forEach((value, index) => {
-					newCode[index] = value
-				})
-			} else {
-				text.split("").forEach((value, index) => {
-					newCode[index] = value
-				})
-			}
+			sourceText.split("").forEach((value, index) => {
+				newCode[index] = value
+			})
 
-			setInputCode(newCode)
+			setStates((states) => ({
+				...states,
+				inputCode: newCode,
+			}))
 		} catch (error) {
 			console.error("Error pasting from clipboard:", error)
 		}
@@ -125,17 +145,18 @@ export default function CreateGame() {
 						/>
 					</Pressable>
 					<View>
-						<Text className={styles.headerText}>Join A Game</Text>
+						<Text className={styles.headerText}>
+							{translate("joinGameHeader")}
+						</Text>
 						<Text className={styles.subheaderText}>
-							Enter the lobby code to join a game with your
-							friends
+							{translate("joinGameSubheader")}
 						</Text>
 					</View>
 				</View>
 				<View className={styles.codeContainer}>
 					<View className={styles.codeInputContainer}>
 						<CodeInput
-							code={inputCode}
+							code={states.inputCode}
 							handleCodeChange={handleCodeChange}
 							inputRefs={inputRefs}
 						/>
@@ -145,13 +166,13 @@ export default function CreateGame() {
 							onPress={handlePasteFromClipboard}
 							size="sm"
 							color="base"
-							label="Paste From Clipboard"
+							label={translate("pasteFromClipboard")}
 						/>
 						<Button
 							onPress={handleContinue}
 							size="lg"
 							color="primary"
-							label="Continue"
+							label={translate("joinGameButton")}
 						/>
 					</View>
 				</View>
@@ -170,6 +191,7 @@ const CodeInput = ({ code, handleCodeChange, inputRefs }: CodeInputProps) => {
 	const handleBlur = () => {
 		setActiveIndex(null)
 	}
+
 	const styles = {
 		container: "flex flex-row items-center justify-center gap-2 px-2 py-8",
 		input: "h-14 w-12 bg-base-200 rounded-lg border border-gray-300 bg-white p-2 text-center text-xl shadow-sm",
@@ -192,6 +214,7 @@ const CodeInput = ({ code, handleCodeChange, inputRefs }: CodeInputProps) => {
 					onChangeText={(text) => handleCodeChange(text, index)}
 					onFocus={() => handleFocus(index)}
 					onBlur={handleBlur}
+					maxLength={1}
 					onKeyPress={({ nativeEvent }) => {
 						if (
 							nativeEvent.key === "Backspace" &&
