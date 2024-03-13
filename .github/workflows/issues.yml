@@ -9,11 +9,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Send Discord notification
+              env:
+                  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_ISSUES }}
               uses: Ilshidur/action-discord@master
               with:
-                  webhook: ${{ secrets.DISCORD_WEBHOOK_ISSUES }}
-                  username: GitHub Actions
-                  content: |
-                      Event: Issue - ${{ github.event.action }} ❗️
-                      Issue: ${{ github.event.issue.title }}
-                      By: ${{ github.actor }}
+                  args: "Issue Notifications: ${{ github.event.action }} | ${{ github.event.issue.title }} by ${{ github.actor }} | ${{ github.event.issue.html_url }}"

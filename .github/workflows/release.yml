@@ -9,11 +9,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Send Discord notification
+              env:
+                  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_RELEASE }}
               uses: Ilshidur/action-discord@master
               with:
-                  webhook: ${{ secrets.DISCORD_WEBHOOK_RELEASE }}
-                  username: GitHub Actions
-                  content: |
-                      Event: Release - ${{ github.event.action }}
-                      Release: ${{ github.event.release.name }}
-                      By: ${{ github.actor }}
+                  args: "New release: ${{ github.repository }} ${{ github.event.release.tag_name }} ${{ github.event.release.html_url }}"

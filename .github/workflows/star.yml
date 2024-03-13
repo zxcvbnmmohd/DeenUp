@@ -9,11 +9,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Send Discord notification
+              env:
+                  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_STAR }}
               uses: Ilshidur/action-discord@master
               with:
-                  webhook: ${{ secrets.DISCORD_WEBHOOK_STAR }}
-                  username: GitHub Actions
-                  content: |
-                      Event: Star :star:
-                      Repository: ${{ github.repository }}
-                      By: ${{ github.actor }}
+                  args: "Starred by ${{ github.actor }}: ${{ github.repository }} - ${{ github.event.repository.stargazers_count }} ⭐"

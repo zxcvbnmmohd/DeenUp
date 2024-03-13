@@ -8,11 +8,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Send Discord notification
+              env:
+                  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_FORK }}
               uses: Ilshidur/action-discord@master
               with:
-                  webhook: ${{ secrets.DISCORD_WEBHOOK_FORK }}
-                  username: GitHub Actions
-                  content: |
-                      Event: Fork 🍴
-                      Repository: ${{ github.repository }}
-                      By: ${{ github.actor }}
+                  args: "Forked repository: ${{ github.repository }} by ${{ github.actor }}"
