@@ -1,0 +1,16 @@
+name: Issue Notifications
+
+on:
+    issues:
+        types: [opened, closed, reopened, edited, labeled, unlabeled]
+
+jobs:
+    discord_notification:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Send Discord notification
+              env:
+                  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_ISSUES }}
+              uses: Ilshidur/action-discord@master
+              with:
+                  args: "Issue Notifications: ${{ github.event.action }} | ${{ github.event.issue.title }} by ${{ github.actor }} | ${{ github.event.issue.html_url }}"
