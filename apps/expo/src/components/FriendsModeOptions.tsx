@@ -13,7 +13,7 @@ type Props = {
 export default function FriendsModeOptions({ setModalOpen }: Props) {
 	const styles = {
 		container:
-			"flex w-full items-center gap-4 rounded-3xl bg-white p-14 shadow-none ",
+			"flex w-full items-center gap-4 rounded-3xl bg-white p-14 shadow-none bottom-36 absolute",
 		closeBtn: "absolute right-4 top-2 rounded-full shadow ",
 	}
 	const navigateAndClose = (navigateTo: string) => {

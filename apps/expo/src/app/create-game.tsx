@@ -12,18 +12,21 @@ import { MaterialCommunityIcons } from "@expo/vector-icons"
 import type { GameStore } from "~/stores"
 
 import { Button } from "~/components"
-import { useGameStore } from "~/stores"
+import { useGameStore, useSettingsStore } from "~/stores"
 
 export default function CreateGame(): ReactNode {
+	const translate = useSettingsStore((state) => state.translate)
 	const code = useGameStore((state: GameStore) => state.lobbyCode)
 	const createLobby = useGameStore((state: GameStore) => state.createLobby)
 	const leaveLobby = useGameStore((state: GameStore) => state.leaveLobby)
 	const setIsCreator = useGameStore((state: GameStore) => state.setIsCreator)
 
 	useEffect(() => {
+		if (code) return
+
 		setIsCreator(true)
 		createLobby()
-	}, [])
+	}, [createLobby, setIsCreator, code])
 
 	const handleExit = () => {
 		leaveLobby()
@@ -71,10 +74,11 @@ export default function CreateGame(): ReactNode {
 						/>
 					</Pressable>
 					<View>
-						<Text className={styles.headerText}>Create Game</Text>
+						<Text className={styles.headerText}>
+							{translate("createGameHeader")}
+						</Text>
 						<Text className={styles.subheaderText}>
-							Copy and share this lobby code with your friends to
-							join the game
+							{translate("createGameSubheader")}
 						</Text>
 					</View>
 				</View>
