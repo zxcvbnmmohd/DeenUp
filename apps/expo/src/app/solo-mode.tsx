@@ -47,7 +47,7 @@ export default function Page(): ReactNode {
 		body: "flex flex-col flex-grow justify-around items-stretch p-12 mx-6 mb-2 bg-white rounded-md shadow-md shadow-offset-x-10 shadow-offset-y-5",
 		question: "text-left text-2xl font-bold",
 		options: "gap-6",
-		column: "flex flex-col gap-2 px-8 items-center ",
+		column: "flex flex-col gap-2 px-8 py-4 items-center",
 	}
 
 	return (
