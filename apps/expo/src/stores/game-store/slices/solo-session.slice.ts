@@ -43,7 +43,9 @@ const createSoloSessionSlice: StateCreator<
 		skippedQuestions: [],
 		selectAnswer: (params: { answer: string }) => {
 			const { isNextPressed } = get()
+
 			if (isNextPressed) return
+
 			set({ selectedAnswer: params.answer })
 		},
 		answerQuestion: () => {
