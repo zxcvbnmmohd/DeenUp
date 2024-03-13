@@ -1,3 +1,2 @@
 pnpm enforce-branch-name '(hotfix|bugfix|feature|backend)\/.+' --ignore '(dev|staging|production)'
-pnpm lint:fix
 npx lint-staged

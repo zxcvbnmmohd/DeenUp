@@ -1,0 +1,29 @@
+name: Push Notifications
+
+on:
+    push:
+        branches:
+            - dev
+            - staging
+    pull_request:
+        types: [closed]
+        branches:
+            - production
+
+jobs:
+    discord_notification:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Send Discord notification
+              uses: Ilshidur/action-discord@master
+              with:
+                  webhook: ${{ secrets.DISCORD_WEBHOOK_PUSH }}
+                  username: GitHub Actions
+                  content: >
+                      ${{
+                        if (github.event_name == 'push') { ':arrow_up: Event: Push' }
+                        else if (github.event.pull_request.merged == true) { ':checkered_flag: Event: Pull Request Merged' }
+                      }}
+                      Branch: ${{ github.ref }}
+                      Commit: ${{ github.sha }}
+                      By: ${{ github.actor }}
