@@ -9,6 +9,7 @@ type SoloSessionStates = {
 	currentQuestionIndex: number
 	selectedAnswer: string | null
 	showResult: boolean
+	isNextPressed: boolean
 	questions: Question[]
 	correctQuestions: Question[]
 	incorrectQuestions: Question[]
@@ -35,11 +36,14 @@ const createSoloSessionSlice: StateCreator<
 		currentQuestionIndex: 0,
 		selectedAnswer: null,
 		showResult: false,
+		isNextPressed: false,
 		questions: randomQuestions(10),
 		correctQuestions: [],
 		incorrectQuestions: [],
 		skippedQuestions: [],
 		selectAnswer: (params: { answer: string }) => {
+			const { isNextPressed } = get()
+			if (isNextPressed) return
 			set({ selectedAnswer: params.answer })
 		},
 		answerQuestion: () => {
@@ -53,6 +57,7 @@ const createSoloSessionSlice: StateCreator<
 				set((state: SoloSessionStates) => ({
 					showResult: true,
 					correctQuestions: [...state.correctQuestions, question],
+					isNextPressed: true,
 				}))
 
 				return
@@ -61,6 +66,7 @@ const createSoloSessionSlice: StateCreator<
 			set((state: SoloSessionStates) => ({
 				showResult: true,
 				incorrectQuestions: [...state.incorrectQuestions, question],
+				isNextPressed: true,
 			}))
 		},
 		skipQuestion: () => {
@@ -81,6 +87,7 @@ const createSoloSessionSlice: StateCreator<
 				currentQuestionIndex: currentQuestionIndex + 1,
 				selectedAnswer: null,
 				showResult: false,
+				isNextPressed: false,
 			})
 		},
 		resetSoloSession: () => {
@@ -88,6 +95,7 @@ const createSoloSessionSlice: StateCreator<
 				currentQuestionIndex: 0,
 				selectedAnswer: null,
 				showResult: false,
+				isNextPressed: false,
 				questions: randomQuestions(10),
 				correctQuestions: [],
 				incorrectQuestions: [],
