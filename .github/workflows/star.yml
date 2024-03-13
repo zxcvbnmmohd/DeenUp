@@ -1,0 +1,16 @@
+name: Star Notifications
+
+on:
+    watch:
+        types: [started]
+
+jobs:
+    discord_notification:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Send Discord notification
+              env:
+                  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_STAR }}
+              uses: Ilshidur/action-discord@master
+              with:
+                  args: "Starred by ${{ github.actor }}: ${{ github.repository }} - ${{ github.event.repository.stargazers_count }} ⭐"

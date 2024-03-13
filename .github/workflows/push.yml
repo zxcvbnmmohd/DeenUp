@@ -1,0 +1,22 @@
+name: Push Notifications
+
+on:
+    push:
+        branches:
+            - dev
+            - staging
+    pull_request:
+        types: [closed]
+        branches:
+            - production
+
+jobs:
+    discord_notification:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Send Discord notification
+              env:
+                  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_PUSH }}
+              uses: Ilshidur/action-discord@master
+              with:
+                  args: "Pushed to ${{ github.ref }} by ${{ github.actor }}"

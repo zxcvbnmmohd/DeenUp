@@ -1,0 +1,15 @@
+name: Fork Notifications
+
+on:
+    fork:
+
+jobs:
+    discord_notification:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Send Discord notification
+              env:
+                  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_FORK }}
+              uses: Ilshidur/action-discord@master
+              with:
+                  args: "Forked repository: ${{ github.repository }} by ${{ github.actor }}"
