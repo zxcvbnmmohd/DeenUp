@@ -10,11 +10,8 @@ import { StatusBar } from "expo-status-bar"
 import { MotiView } from "moti"
 
 import { Button } from "~/components"
-import FriendsModeOptions from "~/components/FriendsModeOptions"
-import { Modal } from "~/components/Modal"
 
 export default function Page(): ReactNode {
-	const [isModalOpen, setModalOpen] = useState(false)
 	const motiStyles = StyleSheet.create({
 		logo: {
 			flexDirection: "column",
@@ -38,14 +35,15 @@ export default function Page(): ReactNode {
 		logoContainer: "flex-1 items-center justify-center",
 		logo: "text-8xl font-bold",
 		logoPrimary: "text-8xl font-bold text-primary",
+		buttonsContainer: "flex flex-row items-center gap-[1px]",
+		joinGameButton: "w-1/2 rounded-r-none",
+		createGameButton: "border-base-300 w-1/2 rounded-l-none ",
 	}
 
 	return (
 		<SafeAreaView>
 			<StatusBar style="auto" />
-			<Modal setModalOpen={setModalOpen} isOpen={isModalOpen}>
-				<FriendsModeOptions setModalOpen={setModalOpen} />
-			</Modal>
+
 			<View className={styles.body}>
 				<View className={styles.logoContainer}>
 					<Text className={styles.logo}>
@@ -71,12 +69,22 @@ export default function Page(): ReactNode {
 					style={motiStyles.container}
 					transition={{ type: "timing", delay: 500 }}
 				>
-					<Button
-						color="primary"
-						size="xl"
-						label="Friends Mode"
-						onPress={() => setModalOpen(true)}
-					/>
+					<View className={styles.buttonsContainer}>
+						<Button
+							color="primary"
+							size="xl"
+							label="Join Game"
+							onPress={() => router.push("/join-game")}
+							className={styles.joinGameButton}
+						/>
+						<Button
+							color="primary"
+							size="xl"
+							label="Create Game"
+							onPress={() => router.push("/create-game")}
+							className={styles.createGameButton}
+						/>
+					</View>
 					<Button
 						color="primary"
 						size="xl"
