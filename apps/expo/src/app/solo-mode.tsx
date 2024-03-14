@@ -48,6 +48,7 @@ export default function Page(): ReactNode {
 		question: "text-left text-2xl font-bold",
 		options: "gap-6",
 		column: "flex flex-col gap-2 px-8 py-4 items-center",
+		buttons: "w-3/4",
 	}
 
 	return (
@@ -94,7 +95,7 @@ export default function Page(): ReactNode {
 			</View>
 			<View className={styles.column}>
 				<Button
-					size="lg"
+					size="xl"
 					color="accent"
 					label={
 						questions.length - 1 === currentQuestionIndex
@@ -119,12 +120,14 @@ export default function Page(): ReactNode {
 							}
 						}, 1000)
 					}}
+					className={styles.buttons}
 				/>
 				<Button
 					color="outline"
-					size="lg"
+					size="xl"
 					label="Exit"
 					onPress={() => router.back()}
+					className={styles.buttons}
 				/>
 			</View>
 		</SafeAreaView>
