@@ -34,9 +34,10 @@ export default function Page(): ReactNode {
 		logoContainer: "flex-1 items-center justify-center",
 		logo: "text-8xl font-bold",
 		logoPrimary: "text-8xl font-bold text-primary",
-		buttonsContainer: "flex flex-row items-center gap-2 w-96 pr-2",
-		joinGameButton: "w-3/5 rounded-r-none",
-		createGameButton: "border-base-300 w-3/5 rounded-l-none ",
+		buttonsContainer:
+			"flex flex-row gap-2 items-center w-full justify-center px-1",
+		joinGameButton: "rounded-r-none w-1/2",
+		createGameButton: "border-base-300 rounded-l-none w-1/2",
 	}
 
 	return (
