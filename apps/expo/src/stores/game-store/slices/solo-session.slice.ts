@@ -83,7 +83,9 @@ const createSoloSessionSlice: StateCreator<
 			}))
 		},
 		nextQuestion: () => {
-			const { currentQuestionIndex } = get()
+			const { currentQuestionIndex, selectedAnswer } = get()
+
+			if (!selectedAnswer) return
 
 			set({
 				currentQuestionIndex: currentQuestionIndex + 1,
