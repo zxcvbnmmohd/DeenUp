@@ -1,4 +1,4 @@
-name: Fork Notifications
+name: Fork Events
 
 on:
     fork:
@@ -7,9 +7,10 @@ jobs:
     discord_notification:
         runs-on: ubuntu-latest
         steps:
-            - name: Send Discord notification
-              env:
-                  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_FORK }}
-              uses: Ilshidur/action-discord@master
+            - uses: sarisia/actions-status-discord@v1
+              if: always()
               with:
-                  args: "Forked repository: ${{ github.repository }} by ${{ github.actor }}"
+                  webhook: ${{ secrets.DISCORD_WEBHOOK_FORK }}
+                  title: "🔀 New Fork: ${{ github.event.repository.name }}"
+                  description: "A new fork of the repository has been created by ${{ github.actor }}: ${{ github.event.repository.html_url }}"
+                  color: 0x3399ff

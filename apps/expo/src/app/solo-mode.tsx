@@ -69,7 +69,7 @@ export default function Page(): ReactNode {
 
 			<TouchableOpacity
 				className={styles.closeButton}
-				onPress={() => router.push("/")}
+				onPress={() => router.dismissAll()}
 			>
 				<AntIcons name="closecircle" color={"white"} size={32} />
 			</TouchableOpacity>
