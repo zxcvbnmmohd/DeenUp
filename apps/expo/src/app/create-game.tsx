@@ -52,6 +52,7 @@ export default function CreateGame(): ReactNode {
 			"flex items-center justify-center bg-base-100 border border-primary p-4 rounded-full",
 		codeTextContainer: "flex flex-row items-center justify-center",
 		codeDigitBox: "bg-gray-200 rounded-md m-1 p-4",
+		createGameButton: "w-2/3",
 	}
 
 	return (
@@ -102,7 +103,12 @@ export default function CreateGame(): ReactNode {
 							/>
 						</Pressable>
 
-						<Button size="lg" color="primary" label="Continue" />
+						<Button
+							className={styles.createGameButton}
+							size="lg"
+							color="primary"
+							label="Continue"
+						/>
 					</View>
 				</View>
 			</View>

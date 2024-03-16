@@ -123,6 +123,7 @@ export default function CreateGame() {
 			"flex items-center justify-center bg-base-100 border border-primary p-4 rounded-full",
 		codeInputContainer: "flex flex-row items-center justify-center gap-2",
 		codeDigitBox: "bg-gray-200 rounded-md m-1 p-4",
+		joinGameButton: "w-2/3",
 	}
 
 	return (
@@ -163,16 +164,17 @@ export default function CreateGame() {
 					</View>
 					<View className={styles.buttonContainer}>
 						<Button
-							onPress={handlePasteFromClipboard}
-							size="sm"
 							color="base"
+							size="sm"
 							label={translate("pasteFromClipboard")}
+							onPress={handlePasteFromClipboard}
 						/>
 						<Button
-							onPress={handleContinue}
-							size="lg"
 							color="primary"
+							size="lg"
 							label={translate("joinGameButton")}
+							onPress={handleContinue}
+							className={styles.joinGameButton}
 						/>
 					</View>
 				</View>

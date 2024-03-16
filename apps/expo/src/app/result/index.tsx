@@ -32,7 +32,7 @@ export default function Page(): ReactNode {
 		statsContainer:
 			"mt-96 flex w-full flex-row items-center justify-center px-10",
 		bottomButtonsContainer: "flex h-14 flex-row gap-3 px-12",
-		checkAnswersButton: "absolute bottom-4 mx-10 rounded-xl",
+		checkAnswersButton: "absolute bottom-4 mx-12 rounded-xl w-3/4",
 		shareButton:
 			"flex size-16  items-center justify-center rounded-3xl border-4 border-gray-300",
 		animationContainer:
@@ -44,6 +44,7 @@ export default function Page(): ReactNode {
 			header: "text-base font-semibold text-gray-400",
 			value: "text-2xl font-bold",
 		},
+		doneButton: "w-3/4 ",
 	}
 	const questions = useGameStore((state: GameStore) => state.questions)
 	const correctQuestions = useGameStore(
@@ -128,7 +129,7 @@ export default function Page(): ReactNode {
 				</View>
 				<View className={styles.bottomButtonsContainer}>
 					<Button
-						className=""
+						className={styles.doneButton}
 						color="primary"
 						size="lg"
 						label="Done"
