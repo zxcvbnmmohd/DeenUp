@@ -1,9 +1,12 @@
 import type { ReactNode } from "react"
 
 import { useEffect } from "react"
-import { SafeAreaView, Text, View } from "react-native"
+import { SafeAreaView, Text, TouchableOpacity, View } from "react-native"
 
 import { router } from "expo-router"
+import { StatusBar } from "expo-status-bar"
+
+import AntIcons from "@expo/vector-icons/AntDesign"
 
 import type { GameStore, SettingsStore } from "~/stores"
 
@@ -47,8 +50,9 @@ export default function Page(): ReactNode {
 		body: "flex flex-col flex-grow justify-around items-stretch p-12 mx-6 mb-2 bg-white rounded-md shadow-md shadow-offset-x-10 shadow-offset-y-5",
 		question: "text-left text-2xl font-bold",
 		options: "gap-6",
-		column: "flex flex-col gap-2 px-8 py-4 items-center",
-		buttons: "w-3/4",
+		buttonsContainer: "flex flex-row justify-between px-6",
+		buttons: "w-1/4",
+		closeButton: "absolute size-10 top-14 right-10 z-20",
 	}
 
 	return (
@@ -61,6 +65,15 @@ export default function Page(): ReactNode {
 				backgroundColor: theme.colors.primary,
 			}}
 		>
+			<StatusBar style="light" />
+
+			<TouchableOpacity
+				className={styles.closeButton}
+				onPress={() => router.push("/")}
+			>
+				<AntIcons name="closecircle" color={"white"} size={32} />
+			</TouchableOpacity>
+
 			<QuestionHeader
 				index={currentQuestionIndex + 1}
 				length={questions.length}
@@ -93,9 +106,16 @@ export default function Page(): ReactNode {
 					)}
 				</View>
 			</View>
-			<View className={styles.column}>
+			<View className={styles.buttonsContainer}>
 				<Button
-					size="xl"
+					color="outline"
+					size="lg"
+					label="Skip"
+					onPress={() => router.back()}
+					className={styles.buttons}
+				/>
+				<Button
+					size="lg"
 					color="accent"
 					label={
 						questions.length - 1 === currentQuestionIndex
@@ -120,13 +140,6 @@ export default function Page(): ReactNode {
 							}
 						}, 1000)
 					}}
-					className={styles.buttons}
-				/>
-				<Button
-					color="outline"
-					size="xl"
-					label="Exit"
-					onPress={() => router.back()}
 					className={styles.buttons}
 				/>
 			</View>
