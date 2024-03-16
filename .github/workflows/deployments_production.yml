@@ -1,0 +1,19 @@
+name: Production Deployments
+
+on:
+    pull_request:
+        types: [closed]
+        branches:
+            - production
+
+jobs:
+    discord_notification:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: sarisia/actions-status-discord@v1
+              if: always()
+              with:
+                  webhook: ${{ secrets.DISCORD_WEBHOOK_DEPLOYMENT_PRODUCTION }}
+                  title: "Deployment to Production Environment 🚀"
+                  description: "The build has been successfully deployed to the Production Environment :rocket:. This is a major milestone, and the changes are now live for everyone to see! :tada: Let's celebrate and continue delivering exceptional work! :confetti_ball:"
+                  color: 0x008000

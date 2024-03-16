@@ -1,0 +1,18 @@
+name: Dev Deployments
+
+on:
+    push:
+        branches:
+            - dev
+
+jobs:
+    discord_notification:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: sarisia/actions-status-discord@v1
+              if: always()
+              with:
+                  webhook: ${{ secrets.DISCORD_WEBHOOK_DEPLOYMENT_DEV }}
+                  title: "Deployment to Development Environment 🚀"
+                  description: "The build has been successfully deployed to the Development Environment :hammer_and_wrench:. Great job, team! :tada: Don't forget to celebrate! :confetti_ball:"
+                  color: 0xff0000
