@@ -1,4 +1,4 @@
-name: Star Notifications
+name: Star Events
 
 on:
     watch:
@@ -8,9 +8,10 @@ jobs:
     discord_notification:
         runs-on: ubuntu-latest
         steps:
-            - name: Send Discord notification
-              env:
-                  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_STAR }}
-              uses: Ilshidur/action-discord@master
+            - uses: sarisia/actions-status-discord@v1
+              if: always()
               with:
-                  args: "Starred by ${{ github.actor }}: ${{ github.repository }} - ${{ github.event.repository.stargazers_count }} ⭐"
+                  webhook: ${{ secrets.DISCORD_WEBHOOK_STAR }}
+                  title: "⭐ New Star: ${{ github.event.repository.name }}"
+                  description: "The repository has been starred by ${{ github.actor }}: [${{ github.event.repository.html_url }}](${{ github.event.repository.html_url }})"
+                  color: 0xffd700
