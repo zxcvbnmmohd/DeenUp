@@ -14,5 +14,5 @@ jobs:
                   webhook: ${{ secrets.DISCORD_WEBHOOK_CODE_REVIEWS }}
                   title: "👀 Code Review Requested"
                   noprefix: true
-                  description: "Hey team! ${{ github.actor }} has requested a code review from ${{ join(github.event.pull_request.requested_reviewers.*.login, ', ') }} on this pull request: ${{ github.event.pull_request.html_url }}."
+                  description: "Hey team! ${{ github.actor }} has requested a code review from :arrow_right:${{ join(github.event.pull_request.requested_reviewers.*.login, ', ') }}:arrow_left: on this pull request: ${{ github.event.pull_request.html_url }}."
                   color: 0x9933ff
