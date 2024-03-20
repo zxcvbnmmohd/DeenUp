@@ -147,10 +147,10 @@ export default function CreateGame() {
 					</Pressable>
 					<View>
 						<Text className={styles.headerText}>
-							{translate("joinGameHeader")}
+							{translate("joinGamePage.joinGameHeader")}
 						</Text>
 						<Text className={styles.subheaderText}>
-							{translate("joinGameSubheader")}
+							{translate("joinGamePage.joinGameSubheader")}
 						</Text>
 					</View>
 				</View>
@@ -166,13 +166,13 @@ export default function CreateGame() {
 						<Button
 							color="base"
 							size="sm"
-							label={translate("pasteFromClipboard")}
+							label={translate("joinGamePage.pasteFromClipboard")}
 							onPress={handlePasteFromClipboard}
 						/>
 						<Button
 							color="primary"
 							size="lg"
-							label={translate("joinGameButton")}
+							label={translate("joinGamePage.joinGameButton")}
 							onPress={handleContinue}
 							className={styles.joinGameButton}
 						/>
@@ -195,8 +195,8 @@ const CodeInput = ({ code, handleCodeChange, inputRefs }: CodeInputProps) => {
 	}
 
 	const styles = {
-		container: "flex flex-row items-center justify-center gap-2 px-2 py-8",
-		input: "h-14 w-12 bg-base-200 rounded-lg border border-gray-300 bg-white p-2 text-center text-xl shadow-sm",
+		container: "flex flex-row items-center justify-center gap-2 px-1 py-8",
+		input: "h-14 w-11 bg-base-200 rounded-lg border border-gray-300 bg-white p-2 text-center text-xl shadow-sm",
 	}
 
 	return (

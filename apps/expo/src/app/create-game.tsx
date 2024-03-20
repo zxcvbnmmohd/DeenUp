@@ -76,10 +76,10 @@ export default function CreateGame(): ReactNode {
 					</Pressable>
 					<View>
 						<Text className={styles.headerText}>
-							{translate("createGameHeader")}
+							{translate("createGamePage.createGameHeader")}
 						</Text>
 						<Text className={styles.subheaderText}>
-							{translate("createGameSubheader")}
+							{translate("createGamePage.createGameSubheader")}
 						</Text>
 					</View>
 				</View>
@@ -107,7 +107,7 @@ export default function CreateGame(): ReactNode {
 							className={styles.createGameButton}
 							size="lg"
 							color="primary"
-							label="Continue"
+							label={translate("createGamePage.createGameButton")}
 						/>
 					</View>
 				</View>

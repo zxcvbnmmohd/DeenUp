@@ -1,7 +1,7 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 
 import { useFonts } from "expo-font"
-import { Stack } from "expo-router"
+import { router, Stack } from "expo-router"
 import { hideAsync, preventAutoHideAsync } from "expo-splash-screen"
 import { StatusBar } from "expo-status-bar"
 
@@ -13,6 +13,10 @@ import FontAwesome from "@expo/vector-icons/FontAwesome"
 import { TRPCProvider } from "~/utils/api"
 
 import "~styles/styles.css"
+
+import { TouchableOpacity } from "react-native"
+
+import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 import { SpaceMonoRegular } from "~/assets"
 import { useTheme } from "~/hooks"
@@ -67,7 +71,31 @@ const RootLayout = () => {
 						fontWeight: "bold",
 					},
 				}}
-			/>
+			>
+				<Stack.Screen name="index" />
+				<Stack.Screen
+					name="(auth)"
+					options={{
+						presentation: "modal",
+						headerShadowVisible: false,
+						headerTitle: "",
+						headerStyle: { backgroundColor: "#6D28D9" },
+						headerShown: true,
+						headerRight: (props) => (
+							<TouchableOpacity
+								className={"size-10"}
+								onPress={() => router.back()}
+							>
+								<MaterialCommunityIcons
+									name="close"
+									color={"white"}
+									size={32}
+								/>
+							</TouchableOpacity>
+						),
+					}}
+				/>
+			</Stack>
 			<StatusBar />
 		</TRPCProvider>
 	)

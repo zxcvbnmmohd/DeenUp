@@ -1,3 +1,4 @@
+import type { TranslateOptions } from "i18n-js"
 import type { StateCreator } from "zustand"
 
 import type { SettingsStore } from "."
@@ -10,7 +11,7 @@ type LanguageStates = {
 
 type LanguageActions = {
 	changeLanguage: (language: string) => void
-	translate: (key: string) => string
+	translate: (key: string, options?: TranslateOptions) => string
 }
 
 export type LanguageSlice = LanguageStates & LanguageActions
@@ -27,7 +28,7 @@ const createLanguageSlice: StateCreator<
 			i18n.locale = language
 			set({ currentLanguage: language })
 		},
-		translate: (key) => i18n.t(key),
+		translate: (key, options?) => i18n.t(key, options),
 	}
 }
 
