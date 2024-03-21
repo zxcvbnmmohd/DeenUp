@@ -85,9 +85,9 @@ export default function Auth() {
 			<AnimatePresence>
 				<MotiView
 					delay={200}
-					from={{ height: "50%" }}
+					from={{ height: "0%" }}
 					animate={{
-						height: isSignUp || isForgotPassword ? "95%" : "50%",
+						height: isSignUp || isForgotPassword ? "98%" : "60%",
 					}}
 					style={motiStyle.container}
 				>
@@ -127,9 +127,19 @@ export default function Auth() {
 							</MotiView>
 						)}
 						{isSignUp ? (
-							<SignUp step={step} setStep={setState} />
+							<SignUp
+								handleToggleSignUp={handleToggleSignUp}
+								step={step}
+								setStep={setState}
+							/>
 						) : isForgotPassword ? (
-							<ForgotPassword step={step} setStep={setState} />
+							<ForgotPassword
+								handleToggleForgotPassword={
+									handleToggleForgotPassword
+								}
+								step={step}
+								setStep={setState}
+							/>
 						) : (
 							<SignIn
 								handleToggleSignUp={handleToggleSignUp}

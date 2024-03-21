@@ -7,6 +7,7 @@ export default function _layout() {
 		<Stack
 			screenOptions={{
 				headerShown: false,
+				presentation: "transparentModal",
 			}}
 		/>
 	)

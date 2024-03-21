@@ -31,7 +31,7 @@ const SegmentedProgressBar: React.FC<SegmentedProgressBarProps> = ({
 		flexDirection: "row",
 		borderRadius: 10,
 		overflow: "hidden",
-		gap: 3,
+		gap: 9,
 	}
 
 	const filledSegments = Math.floor(progress * segments)

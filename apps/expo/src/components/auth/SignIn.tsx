@@ -42,11 +42,15 @@ function SignIn({ handleToggleSignUp, handleToggleForgotPassword }: Props) {
 		if (Object.values(newErrors).some((error) => error !== "")) {
 			return
 		}
-
-		console.log("submit", formData)
 	}
 
 	const handleInputChange = (field: string, value: string) => {
+		if (field === "password" && value === "Enter") {
+			handleSubmit()
+
+			return
+		}
+
 		setFormData((prevData) => ({
 			...prevData,
 			[field]: value,
@@ -65,22 +69,27 @@ function SignIn({ handleToggleSignUp, handleToggleForgotPassword }: Props) {
 			exitTransition={{ delay: 0 }}
 			style={{ width: "100%", gap: 10 }}
 		>
-			<InputField
-				type="email"
-				icon="email"
-				placeholder={translate("authPage.emailInput")}
-				error={errors.email}
-				value={formData.email}
-				onChangeText={(value) => handleInputChange("email", value)}
-			/>
-			<InputField
-				type="password"
-				icon="lock"
-				placeholder={translate("authPage.passwordInput")}
-				error={errors.password}
-				value={formData.password}
-				onChangeText={(value) => handleInputChange("password", value)}
-			/>
+			<View className="gap-8">
+				<InputField
+					type="email"
+					icon="email"
+					placeholder={translate("authPage.emailInput")}
+					error={errors.email}
+					value={formData.email}
+					onChangeText={(value) => handleInputChange("email", value)}
+				/>
+				<InputField
+					type="password"
+					icon="lock"
+					placeholder={translate("authPage.passwordInput")}
+					error={errors.password}
+					value={formData.password}
+					onChangeText={(value) =>
+						handleInputChange("password", value)
+					}
+				/>
+			</View>
+
 			<Button
 				className=""
 				color="link"

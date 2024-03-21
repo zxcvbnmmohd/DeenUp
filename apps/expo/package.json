@@ -46,6 +46,7 @@
 		"react-native-screens": "~3.29.0",
 		"react-native-vector-icons": "^10.0.3",
 		"superjson": "2.2.1",
+		"tailwind-merge": "^2.2.1",
 		"tailwind-variants": "^0.2.0",
 		"zustand": "^4.5.2"
 	},

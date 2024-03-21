@@ -71,6 +71,14 @@ export default function Page(): ReactNode {
 					<Button
 						color="primary"
 						size="xl"
+						label="verify"
+						onPress={() => {
+							router.push("/(auth)/verification")
+						}}
+					/>
+					<Button
+						color="primary"
+						size="xl"
 						label="signin"
 						onPress={() => {
 							router.push("/(auth)")

@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 
 import { useFonts } from "expo-font"
-import { router, Stack } from "expo-router"
+import { router, Stack, usePathname } from "expo-router"
 import { hideAsync, preventAutoHideAsync } from "expo-splash-screen"
 import { StatusBar } from "expo-status-bar"
 
@@ -41,6 +41,7 @@ const RootLayout = () => {
 		...FontAwesome.font,
 	})
 	const { theme } = useTheme()
+	const pathname = usePathname()
 
 	useEffect(() => {
 		if (error) throw error
@@ -76,11 +77,20 @@ const RootLayout = () => {
 				<Stack.Screen
 					name="(auth)"
 					options={{
-						presentation: "modal",
+						presentation:
+							pathname === "/verification"
+								? "transparentModal"
+								: "modal",
 						headerShadowVisible: false,
+						headerBlurEffect: "light",
+						headerStyle: {
+							backgroundColor:
+								pathname === "/verification"
+									? "#F9FAFB"
+									: "#6D28D9",
+						},
+						headerShown: pathname === "/verification" ? true : true,
 						headerTitle: "",
-						headerStyle: { backgroundColor: "#6D28D9" },
-						headerShown: true,
 						headerRight: (props) => (
 							<TouchableOpacity
 								className={"size-10"}
@@ -88,7 +98,11 @@ const RootLayout = () => {
 							>
 								<MaterialCommunityIcons
 									name="close"
-									color={"white"}
+									color={
+										pathname === "/verification"
+											? "black"
+											: "white"
+									}
 									size={32}
 								/>
 							</TouchableOpacity>

@@ -1,12 +1,14 @@
-import React, { useState } from "react"
-import { View } from "react-native"
+import { useState } from "react"
+import { Text, View } from "react-native"
 
+import InputField from "~components/auth/InputField"
+import LottieView from "lottie-react-native"
 import { AnimatePresence, MotiView } from "moti"
 
+import SuccessBlue from "~/assets/lottie/success-check-blue.json"
 import { Button } from "~/components"
+import Verify from "~/components/auth/Verify"
 import { useSettingsStore } from "~/stores"
-
-import InputField from "./InputField"
 
 type States = {
 	isSignUp: boolean
@@ -15,13 +17,16 @@ type States = {
 	name: string
 }
 
-type SignUpProps = {
+type Props = {
 	step: number
 	setStep: React.Dispatch<React.SetStateAction<States>>
+	handleToggleSignUp: () => void
 }
 
-function SignUp({ step, setStep }: SignUpProps) {
+function SignUp({ step, setStep, handleToggleSignUp }: Props) {
 	const translate = useSettingsStore((state) => state.translate)
+	const [code, setCode] = useState("")
+	const [codeError, setCodeError] = useState("")
 	const [formData, setFormData] = useState({
 		name: "",
 		email: "",
@@ -48,8 +53,23 @@ function SignUp({ step, setStep }: SignUpProps) {
 		if (Object.values(newErrors).some((error) => error !== "")) {
 			return
 		}
+		setStep((prevState) => ({
+			...prevState,
+			step: prevState.step + 1,
+		}))
+	}
+	const handleVerifySubmit = () => {
+		if (code.length !== 6) {
+			setCodeError("Code must be 6 digits")
+
+			return
+		}
 
 		console.log("submit", formData)
+		setStep((prevState) => ({
+			...prevState,
+			step: prevState.step + 1,
+		}))
 	}
 
 	const handleContinue = () => {
@@ -73,6 +93,7 @@ function SignUp({ step, setStep }: SignUpProps) {
 	}
 
 	const handleInputChange = (field: string, value: string) => {
+		if (value === "Enter") handleContinue()
 		setFormData((prevData) => ({
 			...prevData,
 			[field]: value,
@@ -148,20 +169,64 @@ function SignUp({ step, setStep }: SignUpProps) {
 						/>
 					</MotiView>
 				)}
+				{step === 3 && (
+					<MotiView
+						key="verification"
+						from={{ opacity: 0, translateY: -20 }}
+						animate={{ opacity: 1, translateY: 0 }}
+					>
+						<Verify
+							error={codeError}
+							setCode={setCode}
+							key="verify"
+						/>
+					</MotiView>
+				)}
+				{step === 4 && (
+					<MotiView
+						style={{
+							flex: 1,
+							justifyContent: "center",
+							alignItems: "center",
+						}}
+						key="verify"
+					>
+						<LottieView
+							source={SuccessBlue}
+							loop={false}
+							autoPlay
+							style={{
+								width: 300,
+								height: 500,
+							}}
+						/>
+					</MotiView>
+				)}
 			</AnimatePresence>
-			<View className="flex items-center justify-center gap-4">
-				<Button
-					className="w-full"
-					color="primary"
-					size="xl"
-					label={
-						step < 2
-							? translate("authPage.signUp.continueButton")
-							: translate("authPage.signUp.submitButton")
-					}
-					onPress={step < 2 ? handleContinue : handleSubmit}
-				/>
-			</View>
+
+			<Button
+				className="w-full"
+				color="primary"
+				size="xl"
+				label={
+					step < 2
+						? translate("authPage.signUp.continueButton")
+						: step === 2
+							? translate("authPage.signUp.submitButton")
+							: step === 3
+								? translate("authPage.signUp.verifyButton")
+								: translate("authPage.signUp.backToSignIn")
+				}
+				onPress={
+					step === 3
+						? handleVerifySubmit
+						: step === 2
+							? handleSubmit
+							: step === 4
+								? handleToggleSignUp
+								: handleContinue
+				}
+			/>
 		</MotiView>
 	)
 }
