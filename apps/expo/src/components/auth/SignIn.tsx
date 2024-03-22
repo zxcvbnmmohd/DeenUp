@@ -3,17 +3,15 @@ import { Text, TouchableOpacity, View } from "react-native"
 
 import { MotiView } from "moti"
 
-import { Button } from "~/components"
+import { Button, EmailInputField, PasswordInputField } from "~/components"
 import { useSettingsStore } from "~/stores"
-
-import InputField from "./InputField"
 
 type Props = {
 	handleToggleSignUp: () => void
-	handleToggleForgotPassword: () => void
+	onBackPress: () => void
 }
 
-function SignIn({ handleToggleSignUp, handleToggleForgotPassword }: Props) {
+const SignIn = ({ handleToggleSignUp, onBackPress }: Props) => {
 	const translate = useSettingsStore((state) => state.translate)
 	const [formData, setFormData] = useState({
 		email: "",
@@ -70,20 +68,14 @@ function SignIn({ handleToggleSignUp, handleToggleForgotPassword }: Props) {
 			style={{ width: "100%", gap: 10 }}
 		>
 			<View className="gap-8">
-				<InputField
-					type="email"
-					icon="email"
-					placeholder={translate("authPage.emailInput")}
-					error={errors.email}
+				<EmailInputField
 					value={formData.email}
+					error={errors.email}
 					onChangeText={(value) => handleInputChange("email", value)}
 				/>
-				<InputField
-					type="password"
-					icon="lock"
-					placeholder={translate("authPage.passwordInput")}
-					error={errors.password}
+				<PasswordInputField
 					value={formData.password}
+					error={errors.password}
 					onChangeText={(value) =>
 						handleInputChange("password", value)
 					}
@@ -95,7 +87,7 @@ function SignIn({ handleToggleSignUp, handleToggleForgotPassword }: Props) {
 				color="link"
 				size="md"
 				label={translate("authPage.signIn.forgotPassword")}
-				onPress={handleToggleForgotPassword}
+				onPress={onBackPress}
 			/>
 			<Button
 				className="w-full"

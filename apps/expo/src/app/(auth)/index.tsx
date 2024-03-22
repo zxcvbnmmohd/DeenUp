@@ -134,18 +134,14 @@ export default function Auth() {
 							/>
 						) : isForgotPassword ? (
 							<ForgotPassword
-								handleToggleForgotPassword={
-									handleToggleForgotPassword
-								}
+								onBackPress={handleToggleForgotPassword}
 								step={step}
 								setStep={setState}
 							/>
 						) : (
 							<SignIn
 								handleToggleSignUp={handleToggleSignUp}
-								handleToggleForgotPassword={
-									handleToggleForgotPassword
-								}
+								onBackPress={handleToggleForgotPassword}
 							/>
 						)}
 					</AnimatePresence>

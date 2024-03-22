@@ -11,14 +11,8 @@ import { StatusBar } from "expo-status-bar"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 import { Button } from "~/components"
-import CodeInput from "~/components/auth/CodeInput"
+import { CodeInput } from "~/components/auth"
 import { useGameStore, useSettingsStore } from "~/stores"
-
-// type CodeInputProps = {
-// 	code: string[]
-// 	handleCodeChange: (text: string, index: number) => void
-// 	inputRefs: React.MutableRefObject<(TextInput | null)[]>
-// }
 
 type States = {
 	inputCode: string[]
@@ -186,52 +180,3 @@ export default function CreateGame() {
 		</SafeAreaView>
 	)
 }
-
-// const CodeInput = ({ code, handleCodeChange, inputRefs }: CodeInputProps) => {
-// 	const [activeIndex, setActiveIndex] = useState<number | null>(null)
-
-// 	const handleFocus = (index: number) => {
-// 		setActiveIndex(index)
-// 	}
-
-// 	const handleBlur = () => {
-// 		setActiveIndex(null)
-// 	}
-
-// 	const styles = {
-// 		container: "flex flex-row items-center justify-center gap-2 px-1 py-8",
-// 		input: "h-14 w-11 bg-base-200 rounded-lg border border-gray-300 bg-white p-2 text-center text-xl shadow-sm",
-// 	}
-
-// 	return (
-// 		<View className={styles.container}>
-// 			{code.map((digit, index) => (
-// 				<TextInput
-// 					key={index}
-// 					ref={(ref) => (inputRefs.current[index] = ref)}
-// 					keyboardType="default"
-// 					autoCapitalize="none"
-// 					className={
-// 						styles.input +
-// 						" " +
-// 						(activeIndex === index ? "border-info" : "")
-// 					}
-// 					value={digit}
-// 					onChangeText={(text) => handleCodeChange(text, index)}
-// 					onFocus={() => handleFocus(index)}
-// 					onBlur={handleBlur}
-// 					maxLength={1}
-// 					onKeyPress={({ nativeEvent }) => {
-// 						if (
-// 							nativeEvent.key === "Backspace" &&
-// 							digit.length === 0 &&
-// 							index > 0
-// 						) {
-// 							inputRefs.current[index - 1]?.focus()
-// 						}
-// 					}}
-// 				/>
-// 			))}
-// 		</View>
-// 	)
-// }

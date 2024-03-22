@@ -3,6 +3,9 @@ import { Text, View } from "react-native"
 
 import { StatusBar } from "expo-status-bar"
 
+import LottieView from "lottie-react-native"
+
+import { lottieBlueCheck } from "~/assets/index"
 import { Button } from "~/components"
 import { Verify } from "~/components/auth/"
 import { useSettingsStore } from "~/stores"
@@ -10,6 +13,7 @@ import { useSettingsStore } from "~/stores"
 export default function Auth() {
 	const translate = useSettingsStore((state) => state.translate)
 	const [isSubmiting, setSubmitting] = useState(false)
+	const [isVerified, setVerified] = useState(false)
 	const [error, setError] = useState<string>("")
 	const [code, setCode] = useState("")
 
@@ -21,9 +25,11 @@ export default function Auth() {
 		}
 
 		setSubmitting(true)
+
 		setTimeout(() => {
 			setSubmitting(false)
 			setError("")
+			setVerified(true)
 		}, 5000)
 	}
 
@@ -34,6 +40,7 @@ export default function Auth() {
 		subheader: "text-lg font-light text-gray-500",
 		logo: "text-base-100 text-2xl font-bold",
 		closeButton: "size-10 absolute top-5 right-5",
+		submitButton: "absolute bottom-12 w-11/12",
 	}
 
 	return (
@@ -50,12 +57,25 @@ export default function Auth() {
 						})}
 					</Text>
 				</View>
-				<Verify setCode={setCode} error={error} />
+				{isVerified ? (
+					<LottieView
+						source={lottieBlueCheck}
+						loop={false}
+						autoPlay
+						style={{
+							width: 300,
+							height: 500,
+						}}
+					/>
+				) : (
+					<Verify setCode={setCode} error={error} />
+				)}
+
 				<Button
-					label="Submit"
+					label={isVerified ? "Continue" : "Verify"}
 					color="primary"
 					size="xl"
-					className="absolute bottom-12 w-11/12"
+					className={styles.submitButton}
 					onPress={() => handleVerifySubmit()}
 					isLoading={isSubmiting}
 				/>

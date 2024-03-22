@@ -1,14 +1,20 @@
+import type { Dispatch, SetStateAction } from "react"
+
 import { useState } from "react"
-import { View } from "react-native"
 
 import LottieView from "lottie-react-native"
 import { AnimatePresence, MotiView } from "moti"
 
-import SuccessBlue from "~/assets/lottie/success-check-blue.json"
-import { Button } from "~/components"
+import { lottieBlueCheck } from "~/assets/index"
+import { Button, EmailInputField, PasswordInputField } from "~/components"
 import { Verify } from "~/components/auth"
-import InputField from "~/components/auth/InputField"
 import { useSettingsStore } from "~/stores"
+
+type Props = {
+	step: number
+	setStep: Dispatch<SetStateAction<States>>
+	onBackPress: () => void
+}
 
 type States = {
 	isSignUp: boolean
@@ -17,13 +23,7 @@ type States = {
 	name: string
 }
 
-type Props = {
-	step: number
-	setStep: React.Dispatch<React.SetStateAction<States>>
-	handleToggleForgotPassword: () => void
-}
-
-function ForgotPassword({ step, setStep, handleToggleForgotPassword }: Props) {
+const ForgotPassword = ({ step, setStep, onBackPress }: Props) => {
 	const translate = useSettingsStore((state) => state.translate)
 	const [code, setCode] = useState("")
 	const [isSubmiting, setSubmitting] = useState(false)
@@ -41,7 +41,6 @@ function ForgotPassword({ step, setStep, handleToggleForgotPassword }: Props) {
 
 	const handleSubmit = () => {
 		const { email, password, confirmPassword } = formData
-		console.log(step)
 
 		const newErrors = {
 			email: step === 0 && !email ? "Email is required" : "",
@@ -52,18 +51,20 @@ function ForgotPassword({ step, setStep, handleToggleForgotPassword }: Props) {
 					? "Passwords do not match"
 					: "",
 		}
+
 		setErrors(newErrors)
 
 		if (Object.values(newErrors).some((error) => error !== "")) {
 			return
 		}
+
 		setSubmitting(true)
 		setTimeout(() => {
-			// if (step === 2) return
 			setStep((prevState) => ({
 				...prevState,
 				step: prevState.step + 1,
 			}))
+
 			setSubmitting(false)
 		}, 1000)
 	}
@@ -96,12 +97,9 @@ function ForgotPassword({ step, setStep, handleToggleForgotPassword }: Props) {
 						from={{ opacity: 0, translateY: -20 }}
 						animate={{ opacity: 1, translateY: 0 }}
 					>
-						<InputField
-							type="email"
-							icon="email"
-							placeholder="Email Address"
-							error={errors.email}
+						<EmailInputField
 							value={formData.email}
+							error={errors.email}
 							onChangeText={(value) =>
 								handleInputChange("email", value)
 							}
@@ -124,24 +122,16 @@ function ForgotPassword({ step, setStep, handleToggleForgotPassword }: Props) {
 						animate={{ opacity: 1, translateY: 0 }}
 						style={{ gap: 32 }}
 					>
-						<InputField
-							type="password"
-							icon="lock"
-							placeholder={translate("authPage.passwordInput")}
-							error={errors.password}
+						<PasswordInputField
 							value={formData.password}
+							error={errors.password}
 							onChangeText={(value) =>
 								handleInputChange("password", value)
 							}
 						/>
-						<InputField
-							type="password"
-							icon="lock"
-							placeholder={translate(
-								"authPage.confirmPasswordInput",
-							)}
-							error={errors.confirmPassword}
+						<PasswordInputField
 							value={formData.confirmPassword}
+							error={errors.confirmPassword}
 							onChangeText={(value) =>
 								handleInputChange("confirmPassword", value)
 							}
@@ -158,7 +148,7 @@ function ForgotPassword({ step, setStep, handleToggleForgotPassword }: Props) {
 						key="verify"
 					>
 						<LottieView
-							source={SuccessBlue}
+							source={lottieBlueCheck}
 							loop={false}
 							autoPlay
 							style={{
@@ -189,7 +179,7 @@ function ForgotPassword({ step, setStep, handleToggleForgotPassword }: Props) {
 										"authPage.forgotPassword.backToSignIn",
 									)
 				}
-				onPress={step === 3 ? handleToggleForgotPassword : handleSubmit}
+				onPress={step === 3 ? onBackPress : handleSubmit}
 			/>
 		</MotiView>
 	)

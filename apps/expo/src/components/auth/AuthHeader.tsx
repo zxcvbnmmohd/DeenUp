@@ -1,4 +1,3 @@
-import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 
 import { MaterialCommunityIcons } from "@expo/vector-icons"
@@ -11,6 +10,7 @@ type Step = {
 	header: string
 	subheader: string
 }
+
 type Props = {
 	step: number
 	handleBack: () => void
@@ -18,6 +18,7 @@ type Props = {
 	isSignUp: boolean
 	name?: string
 }
+
 const signUpSteps: Record<number, Step> = {
 	0: {
 		header: "authPage.signUp.nameHeader",
@@ -40,6 +41,7 @@ const signUpSteps: Record<number, Step> = {
 		subheader: "authPage.signUp.successSubheader",
 	},
 }
+
 const forgotPasswordSteps: Record<number, Step> = {
 	0: {
 		header: "authPage.forgotPassword.header",
@@ -59,9 +61,14 @@ const forgotPasswordSteps: Record<number, Step> = {
 	},
 }
 
-function AuthHeader({ step, handleBack, handleToggle, isSignUp, name }: Props) {
+const AuthHeader = ({
+	step,
+	handleBack,
+	handleToggle,
+	isSignUp,
+	name,
+}: Props) => {
 	const translate = useSettingsStore((state) => state.translate)
-
 	const steps = isSignUp ? signUpSteps : forgotPasswordSteps
 	const currentStep = steps[step]!
 

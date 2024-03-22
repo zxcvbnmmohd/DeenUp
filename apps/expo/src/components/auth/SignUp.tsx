@@ -1,13 +1,16 @@
 import { useState } from "react"
-import { Text, View } from "react-native"
 
-import InputField from "~components/auth/InputField"
 import LottieView from "lottie-react-native"
 import { AnimatePresence, MotiView } from "moti"
 
-import SuccessBlue from "~/assets/lottie/success-check-blue.json"
-import { Button } from "~/components"
-import Verify from "~/components/auth/Verify"
+import { lottieBlueCheck } from "~/assets/index"
+import {
+	Button,
+	EmailInputField,
+	NameInputField,
+	PasswordInputField,
+} from "~/components"
+import { Verify } from "~/components/auth"
 import { useSettingsStore } from "~/stores"
 
 type States = {
@@ -23,7 +26,7 @@ type Props = {
 	handleToggleSignUp: () => void
 }
 
-function SignUp({ step, setStep, handleToggleSignUp }: Props) {
+const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 	const translate = useSettingsStore((state) => state.translate)
 	const [code, setCode] = useState("")
 	const [codeError, setCodeError] = useState("")
@@ -48,16 +51,19 @@ function SignUp({ step, setStep, handleToggleSignUp }: Props) {
 				? ""
 				: translate("authPage.alerts.passwordRequired"),
 		}
+
 		setErrors(newErrors)
 
 		if (Object.values(newErrors).some((error) => error !== "")) {
 			return
 		}
+
 		setStep((prevState) => ({
 			...prevState,
 			step: prevState.step + 1,
 		}))
 	}
+
 	const handleVerifySubmit = () => {
 		if (code.length !== 6) {
 			setCodeError("Code must be 6 digits")
@@ -79,6 +85,7 @@ function SignUp({ step, setStep, handleToggleSignUp }: Props) {
 			email: step === 1 && !email ? "Email is required" : "",
 			password: step === 2 && !password ? "Password is required" : "",
 		}
+
 		setErrors(newErrors)
 
 		if (Object.values(newErrors).some((error) => error !== "")) {
@@ -121,10 +128,7 @@ function SignUp({ step, setStep, handleToggleSignUp }: Props) {
 						from={{ opacity: 0, translateY: -20 }}
 						animate={{ opacity: 1, translateY: 0 }}
 					>
-						<InputField
-							type="name"
-							icon="face-man-profile"
-							placeholder={translate("authPage.nameInput")}
+						<NameInputField
 							error={errors.name}
 							value={formData.name}
 							onChangeText={(value) =>
@@ -139,10 +143,7 @@ function SignUp({ step, setStep, handleToggleSignUp }: Props) {
 						from={{ opacity: 0, translateY: -20 }}
 						animate={{ opacity: 1, translateY: 0 }}
 					>
-						<InputField
-							type="email"
-							icon="email"
-							placeholder={translate("authPage.emailInput")}
+						<EmailInputField
 							error={errors.email}
 							value={formData.email}
 							onChangeText={(value) =>
@@ -157,10 +158,7 @@ function SignUp({ step, setStep, handleToggleSignUp }: Props) {
 						from={{ opacity: 0, translateY: -20 }}
 						animate={{ opacity: 1, translateY: 0 }}
 					>
-						<InputField
-							type="password"
-							icon="lock"
-							placeholder={translate("authPage.passwordInput")}
+						<PasswordInputField
 							error={errors.password}
 							value={formData.password}
 							onChangeText={(value) =>
@@ -192,7 +190,7 @@ function SignUp({ step, setStep, handleToggleSignUp }: Props) {
 						key="verify"
 					>
 						<LottieView
-							source={SuccessBlue}
+							source={lottieBlueCheck}
 							loop={false}
 							autoPlay
 							style={{
@@ -218,10 +216,10 @@ function SignUp({ step, setStep, handleToggleSignUp }: Props) {
 								: translate("authPage.signUp.backToSignIn")
 				}
 				onPress={
-					step === 3
-						? handleVerifySubmit
-						: step === 2
-							? handleSubmit
+					step === 2
+						? handleSubmit
+						: step === 3
+							? handleVerifySubmit
 							: step === 4
 								? handleToggleSignUp
 								: handleContinue
