@@ -1,6 +1,6 @@
+import type { FC } from "react"
 import type { ViewStyle } from "react-native"
 
-import React from "react"
 import { View } from "react-native"
 
 import { MotiView } from "moti"
@@ -13,7 +13,7 @@ type SegmentedProgressBarProps = {
 	style?: ViewStyle
 }
 
-const SegmentedProgressBar: React.FC<SegmentedProgressBarProps> = ({
+const SegmentedProgressBar: FC<SegmentedProgressBarProps> = ({
 	progress,
 	segments,
 	color,

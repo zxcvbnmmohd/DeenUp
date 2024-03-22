@@ -1,6 +1,7 @@
+import type { Dispatch, SetStateAction } from "react"
 import type { TextInput } from "react-native"
 
-import React, { useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 
 import * as Clipboard from "expo-clipboard"
@@ -14,7 +15,7 @@ type States = {
 	inputCode: string[]
 }
 type Props = {
-	setCode: React.Dispatch<React.SetStateAction<string>>
+	setCode: Dispatch<SetStateAction<string>>
 	error: string
 }
 

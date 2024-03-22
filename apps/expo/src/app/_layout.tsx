@@ -91,7 +91,7 @@ const RootLayout = () => {
 						},
 						headerShown: pathname === "/verification" ? true : true,
 						headerTitle: "",
-						headerRight: (props) => (
+						headerRight: () => (
 							<TouchableOpacity
 								className={"size-10"}
 								onPress={() => router.back()}
