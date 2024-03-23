@@ -3,14 +3,14 @@ import { useState } from "react"
 import LottieView from "lottie-react-native"
 import { AnimatePresence, MotiView } from "moti"
 
-import { lottieBlueCheck } from "~/assets/index"
+import { lottieBlueCheck } from "~/assets"
+import { Verify } from "~/components/auth"
 import {
 	Button,
 	EmailInputField,
 	NameInputField,
 	PasswordInputField,
-} from "~/components"
-import { Verify } from "~/components/auth"
+} from "~/components/ui"
 import { useSettingsStore } from "~/stores"
 
 type States = {
@@ -203,7 +203,7 @@ const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 			</AnimatePresence>
 
 			<Button
-				className="w-full"
+				buttonStyle="w-full"
 				color="primary"
 				size="xl"
 				label={

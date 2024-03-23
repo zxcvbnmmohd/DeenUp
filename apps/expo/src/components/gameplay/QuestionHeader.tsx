@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 import { Text, View } from "react-native"
 import { ProgressBar } from "react-native-paper"
 
-import { Timer } from "~/components"
+import { Timer } from "~/components/ui"
 
 const QuestionHeader = ({
 	index,

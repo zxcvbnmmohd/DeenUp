@@ -4,6 +4,7 @@ import { Pressable, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 import { Link, router, Stack } from "expo-router"
+import { StatusBar } from "expo-status-bar"
 
 import AntIcons from "@expo/vector-icons/AntDesign"
 import LottieView from "lottie-react-native"
@@ -11,7 +12,7 @@ import LottieView from "lottie-react-native"
 import type { GameStore } from "~/stores"
 
 import Trophy from "~/assets/lottie/result-trophy.json"
-import { Button } from "~/components"
+import { Button } from "~/components/ui"
 import { useGameStore } from "~/stores"
 
 type StatItemProps = {
@@ -65,10 +66,11 @@ export default function Page(): ReactNode {
 	return (
 		<SafeAreaView>
 			<Stack.Screen options={{ title: "Results" }} />
+			<StatusBar style="dark" />
 			<View className={styles.animationContainer}>
 				<View className={styles.animationContainerBackground}>
 					<Button
-						className={styles.checkAnswersButton}
+						buttonStyle={styles.checkAnswersButton}
 						size="lg"
 						label="Check Correct Answer"
 						color="accent"
@@ -129,7 +131,7 @@ export default function Page(): ReactNode {
 				</View>
 				<View className={styles.bottomButtonsContainer}>
 					<Button
-						className={styles.doneButton}
+						buttonStyle={styles.doneButton}
 						color="primary"
 						size="lg"
 						label="Done"

@@ -10,9 +10,9 @@ import AntIcons from "@expo/vector-icons/AntDesign"
 
 import type { GameStore, SettingsStore } from "~/stores"
 
-import { Button } from "~/components"
 import QuestionHeader from "~/components/gameplay/QuestionHeader"
 import QuestionOption from "~/components/gameplay/QuestionOption"
+import { Button } from "~/components/ui"
 import { useGameStore, useSettingsStore } from "~/stores"
 
 export default function Page(): ReactNode {
@@ -112,7 +112,7 @@ export default function Page(): ReactNode {
 					size="lg"
 					label="Skip"
 					onPress={() => router.back()}
-					className={styles.buttons}
+					buttonStyle={styles.buttons}
 				/>
 				<Button
 					size="lg"
@@ -122,7 +122,6 @@ export default function Page(): ReactNode {
 							? "Submit"
 							: "Next"
 					}
-					outline
 					onPress={() => {
 						if (
 							!selectedAnswer ||
@@ -140,7 +139,7 @@ export default function Page(): ReactNode {
 							}
 						}, 1000)
 					}}
-					className={styles.buttons}
+					buttonStyle={styles.buttons}
 				/>
 			</View>
 		</SafeAreaView>

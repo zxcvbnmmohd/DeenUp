@@ -11,6 +11,7 @@ type SegmentedProgressBarProps = {
 	color: string
 	backgroundColor?: string
 	style?: ViewStyle
+	className?: string
 }
 
 const SegmentedProgressBar: FC<SegmentedProgressBarProps> = ({
@@ -19,6 +20,7 @@ const SegmentedProgressBar: FC<SegmentedProgressBarProps> = ({
 	color,
 	backgroundColor,
 	style,
+	className,
 }) => {
 	const segmentStyle: ViewStyle = {
 		flex: 1,
@@ -44,7 +46,11 @@ const SegmentedProgressBar: FC<SegmentedProgressBarProps> = ({
 	return (
 		<View style={[segmentContainerStyle, style]}>
 			{segmentsArray.map((segment) => (
-				<View key={segment.key} style={segmentStyle}>
+				<View
+					className={className}
+					key={segment.key}
+					style={segmentStyle}
+				>
 					<MotiView
 						style={[
 							{

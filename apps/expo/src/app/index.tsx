@@ -8,7 +8,7 @@ import { StatusBar } from "expo-status-bar"
 
 import { MotiView } from "moti"
 
-import { Button } from "~/components"
+import { Button, Spacer } from "~/components/ui"
 
 export default function Page(): ReactNode {
 	const motiStyles = StyleSheet.create({
@@ -16,22 +16,19 @@ export default function Page(): ReactNode {
 			flexDirection: "column",
 			justifyContent: "center",
 			alignItems: "center",
-			flexGrow: 1,
 			textAlign: "center",
 			fontSize: 96.0,
 			fontWeight: "bold",
 		},
 		container: {
-			flex: 1,
 			width: "100%",
 			gap: 10,
 			justifyContent: "flex-end",
-			height: "auto",
 		},
 	})
 	const styles = {
-		body: "flex h-full flex-col justify-around p-4",
-		logoContainer: "flex-1 items-center justify-center",
+		body: "flex h-full flex-col p-4",
+		logoContainer: "items-center",
 		logo: "text-8xl font-bold",
 		logoPrimary: "text-8xl font-bold text-primary",
 		buttonsContainer:
@@ -44,6 +41,7 @@ export default function Page(): ReactNode {
 		<SafeAreaView>
 			<StatusBar style="auto" />
 			<View className={styles.body}>
+				<Spacer />
 				<View className={styles.logoContainer}>
 					<Text className={styles.logo}>
 						Deen
@@ -61,7 +59,7 @@ export default function Page(): ReactNode {
 						</MotiView>
 					</Text>
 				</View>
-
+				<Spacer />
 				<MotiView
 					from={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
@@ -90,14 +88,14 @@ export default function Page(): ReactNode {
 							size="xl"
 							label="Join Game"
 							onPress={() => router.push("/join-game")}
-							className={styles.joinGameButton}
+							buttonStyle={styles.joinGameButton}
 						/>
 						<Button
 							color="primary"
 							size="xl"
 							label="Create Game"
 							onPress={() => router.push("/create-game")}
-							className={styles.createGameButton}
+							buttonStyle={styles.createGameButton}
 						/>
 					</View>
 					<Button
