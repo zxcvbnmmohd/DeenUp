@@ -1,7 +1,7 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 
 import { useFonts } from "expo-font"
-import { Stack } from "expo-router"
+import { router, Stack, usePathname } from "expo-router"
 import { hideAsync, preventAutoHideAsync } from "expo-splash-screen"
 import { StatusBar } from "expo-status-bar"
 
@@ -13,6 +13,10 @@ import FontAwesome from "@expo/vector-icons/FontAwesome"
 import { TRPCProvider } from "~/utils/api"
 
 import "~styles/styles.css"
+
+import { TouchableOpacity } from "react-native"
+
+import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 import { SpaceMonoRegular } from "~/assets"
 import { useTheme } from "~/hooks"
@@ -37,6 +41,7 @@ const RootLayout = () => {
 		...FontAwesome.font,
 	})
 	const { theme } = useTheme()
+	const pathname = usePathname()
 
 	useEffect(() => {
 		if (error) throw error
@@ -67,7 +72,44 @@ const RootLayout = () => {
 						fontWeight: "bold",
 					},
 				}}
-			/>
+			>
+				<Stack.Screen name="index" />
+				<Stack.Screen
+					name="(auth)"
+					options={{
+						presentation:
+							pathname === "/verification"
+								? "transparentModal"
+								: "modal",
+						headerShadowVisible: false,
+						headerBlurEffect: "light",
+						headerStyle: {
+							backgroundColor:
+								pathname === "/verification"
+									? "#F9FAFB"
+									: "#6D28D9",
+						},
+						headerShown: pathname === "/verification" ? true : true,
+						headerTitle: "",
+						headerRight: () => (
+							<TouchableOpacity
+								className={"size-10"}
+								onPress={() => router.back()}
+							>
+								<MaterialCommunityIcons
+									name="close"
+									color={
+										pathname === "/verification"
+											? "black"
+											: "white"
+									}
+									size={32}
+								/>
+							</TouchableOpacity>
+						),
+					}}
+				/>
+			</Stack>
 			<StatusBar />
 		</TRPCProvider>
 	)

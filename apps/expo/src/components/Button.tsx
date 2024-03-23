@@ -1,17 +1,24 @@
 import type { GestureResponderEvent } from "react-native"
 
-import React from "react"
-import { Text, TouchableOpacity } from "react-native"
+import { ActivityIndicator, Text, TouchableOpacity } from "react-native"
 
 import { tv } from "tailwind-variants"
 
 type Props = {
 	label: string
 	className?: string
-	color?: "primary" | "secondary" | "tertiary" | "accent" | "outline" | "base"
+	color?:
+		| "primary"
+		| "secondary"
+		| "tertiary"
+		| "accent"
+		| "outline"
+		| "base"
+		| "link"
 	outline?: boolean
 	onPress?: ((event: GestureResponderEvent) => void) | undefined
 	size?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl"
+	isLoading?: boolean
 }
 
 const Button = (props: Props): React.ReactNode => {
@@ -26,6 +33,7 @@ const Button = (props: Props): React.ReactNode => {
 					accent: "bg-accent",
 					outline: "border border-primary bg-white",
 					base: "bg-base-100",
+					link: "bg-transparent",
 				},
 				size: {
 					sm: "h-11 px-3 text-sm",
@@ -61,6 +69,7 @@ const Button = (props: Props): React.ReactNode => {
 					outline: "text-primary",
 					white: "text-black",
 					base: "text-black",
+					link: "text-primary",
 				},
 			},
 		}),
@@ -76,14 +85,18 @@ const Button = (props: Props): React.ReactNode => {
 				props.className
 			}
 		>
-			<Text
-				className={styles.textStyle({
-					size: props.size,
-					color: props.color,
-				})}
-			>
-				{props.label}
-			</Text>
+			{props.isLoading ? (
+				<ActivityIndicator color="white" />
+			) : (
+				<Text
+					className={styles.textStyle({
+						size: props.size,
+						color: props.color,
+					})}
+				>
+					{props.label}
+				</Text>
+			)}
 		</TouchableOpacity>
 	)
 }

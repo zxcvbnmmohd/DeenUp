@@ -1,5 +1,7 @@
+import type { TextInput } from "react-native"
+
 import React, { useRef, useState } from "react"
-import { Pressable, Text, TextInput, View } from "react-native"
+import { Pressable, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 import * as Clipboard from "expo-clipboard"
@@ -9,13 +11,8 @@ import { StatusBar } from "expo-status-bar"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 import { Button } from "~/components"
+import { CodeInput } from "~/components/auth"
 import { useGameStore, useSettingsStore } from "~/stores"
-
-type CodeInputProps = {
-	code: string[]
-	handleCodeChange: (text: string, index: number) => void
-	inputRefs: React.MutableRefObject<(TextInput | null)[]>
-}
 
 type States = {
 	inputCode: string[]
@@ -147,10 +144,10 @@ export default function CreateGame() {
 					</Pressable>
 					<View>
 						<Text className={styles.headerText}>
-							{translate("joinGameHeader")}
+							{translate("joinGamePage.joinGameHeader")}
 						</Text>
 						<Text className={styles.subheaderText}>
-							{translate("joinGameSubheader")}
+							{translate("joinGamePage.joinGameSubheader")}
 						</Text>
 					</View>
 				</View>
@@ -160,19 +157,20 @@ export default function CreateGame() {
 							code={states.inputCode}
 							handleCodeChange={handleCodeChange}
 							inputRefs={inputRefs}
+							inputClass="w-10 h-16"
 						/>
 					</View>
 					<View className={styles.buttonContainer}>
 						<Button
 							color="base"
 							size="sm"
-							label={translate("pasteFromClipboard")}
+							label={translate("joinGamePage.pasteFromClipboard")}
 							onPress={handlePasteFromClipboard}
 						/>
 						<Button
 							color="primary"
 							size="lg"
-							label={translate("joinGameButton")}
+							label={translate("joinGamePage.joinGameButton")}
 							onPress={handleContinue}
 							className={styles.joinGameButton}
 						/>
@@ -180,54 +178,5 @@ export default function CreateGame() {
 				</View>
 			</View>
 		</SafeAreaView>
-	)
-}
-
-const CodeInput = ({ code, handleCodeChange, inputRefs }: CodeInputProps) => {
-	const [activeIndex, setActiveIndex] = useState<number | null>(null)
-
-	const handleFocus = (index: number) => {
-		setActiveIndex(index)
-	}
-
-	const handleBlur = () => {
-		setActiveIndex(null)
-	}
-
-	const styles = {
-		container: "flex flex-row items-center justify-center gap-2 px-2 py-8",
-		input: "h-14 w-12 bg-base-200 rounded-lg border border-gray-300 bg-white p-2 text-center text-xl shadow-sm",
-	}
-
-	return (
-		<View className={styles.container}>
-			{code.map((digit, index) => (
-				<TextInput
-					key={index}
-					ref={(ref) => (inputRefs.current[index] = ref)}
-					keyboardType="default"
-					autoCapitalize="none"
-					className={
-						styles.input +
-						" " +
-						(activeIndex === index ? "border-info" : "")
-					}
-					value={digit}
-					onChangeText={(text) => handleCodeChange(text, index)}
-					onFocus={() => handleFocus(index)}
-					onBlur={handleBlur}
-					maxLength={1}
-					onKeyPress={({ nativeEvent }) => {
-						if (
-							nativeEvent.key === "Backspace" &&
-							digit.length === 0 &&
-							index > 0
-						) {
-							inputRefs.current[index - 1]?.focus()
-						}
-					}}
-				/>
-			))}
-		</View>
 	)
 }

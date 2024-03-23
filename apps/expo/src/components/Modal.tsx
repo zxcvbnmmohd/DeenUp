@@ -1,6 +1,6 @@
+import type { Dispatch, SetStateAction } from "react"
 import type { ModalProps } from "react-native"
 
-import React from "react"
 import {
 	KeyboardAvoidingView,
 	Platform,
@@ -11,7 +11,7 @@ import {
 type Props = ModalProps & {
 	isOpen: boolean
 	withInput?: boolean
-	setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+	setModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export const Modal = ({ isOpen, withInput, children, ...rest }: Props) => {

@@ -43,7 +43,6 @@ export default function Page(): ReactNode {
 	return (
 		<SafeAreaView>
 			<StatusBar style="auto" />
-
 			<View className={styles.body}>
 				<View className={styles.logoContainer}>
 					<Text className={styles.logo}>
@@ -69,6 +68,22 @@ export default function Page(): ReactNode {
 					style={motiStyles.container}
 					transition={{ type: "timing", delay: 500 }}
 				>
+					<Button
+						color="primary"
+						size="xl"
+						label="verify"
+						onPress={() => {
+							router.push("/(auth)/verification")
+						}}
+					/>
+					<Button
+						color="primary"
+						size="xl"
+						label="signin"
+						onPress={() => {
+							router.push("/(auth)")
+						}}
+					/>
 					<View className={styles.buttonsContainer}>
 						<Button
 							color="primary"
