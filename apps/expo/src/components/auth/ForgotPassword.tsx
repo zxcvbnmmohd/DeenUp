@@ -166,6 +166,7 @@ const ForgotPassword = ({ step, setStep, onBackPress }: Props) => {
 				buttonStyle="w-full"
 				color="primary"
 				size="xl"
+				isLoading={isSubmiting}
 				label={
 					step === 0
 						? translate("authPage.forgotPassword.requestReset")
