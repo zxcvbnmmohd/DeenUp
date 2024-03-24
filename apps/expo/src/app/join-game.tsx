@@ -1,17 +1,15 @@
 import type { TextInput } from "react-native"
 
 import React, { useRef, useState } from "react"
-import { Pressable, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 import * as Clipboard from "expo-clipboard"
 import { router } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 
-import { MaterialCommunityIcons } from "@expo/vector-icons"
-
-import { Button } from "~/components"
 import { CodeInput } from "~/components/auth"
+import { Button } from "~/components/ui"
 import { useGameStore, useSettingsStore } from "~/stores"
 
 type States = {
@@ -114,8 +112,7 @@ export default function CreateGame() {
 		codeText: "text-xl font-bold",
 		buttonContainer:
 			"flex flex-col items-center justify-center w-full gap-6",
-		backButton:
-			"flex items-center justify-center bg-base-100 border border-primary p-4 rounded-full  h-16",
+		backButton: "flex items-center justify-center  p-4 rounded-full  h-16",
 		shareButton:
 			"flex items-center justify-center bg-base-100 border border-primary p-4 rounded-full",
 		codeInputContainer: "flex flex-row items-center justify-center gap-2",
@@ -132,16 +129,15 @@ export default function CreateGame() {
 			<StatusBar style="light" />
 			<View className={styles.container}>
 				<View className={styles.headerContainer}>
-					<Pressable
+					<Button
+						iconName="chevron-left"
+						iconSize={32}
+						iconColor="white"
+						color="link"
+						buttonStyle={styles.backButton}
 						onPress={handleExit}
-						className={styles.backButton}
-					>
-						<MaterialCommunityIcons
-							name="chevron-left"
-							size={24}
-							color="#6D28D9"
-						/>
-					</Pressable>
+						size="sm"
+					/>
 					<View>
 						<Text className={styles.headerText}>
 							{translate("joinGamePage.joinGameHeader")}
@@ -172,7 +168,7 @@ export default function CreateGame() {
 							size="lg"
 							label={translate("joinGamePage.joinGameButton")}
 							onPress={handleContinue}
-							className={styles.joinGameButton}
+							buttonStyle={styles.joinGameButton}
 						/>
 					</View>
 				</View>

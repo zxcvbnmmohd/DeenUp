@@ -1,17 +1,15 @@
 import type { ReactNode } from "react"
 
 import { useEffect } from "react"
-import { Pressable, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 import { router } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 
-import { MaterialCommunityIcons } from "@expo/vector-icons"
-
 import type { GameStore } from "~/stores"
 
-import { Button } from "~/components"
+import { Button } from "~/components/ui"
 import { useGameStore, useSettingsStore } from "~/stores"
 
 export default function CreateGame(): ReactNode {
@@ -32,6 +30,7 @@ export default function CreateGame(): ReactNode {
 		leaveLobby()
 		router.dismiss()
 	}
+
 	const handleShare = () => {
 		console.log("Sharing code", code)
 	}
@@ -46,10 +45,8 @@ export default function CreateGame(): ReactNode {
 		codeText: "text-xl font-bold",
 		buttonContainer:
 			"flex flex-col items-center justify-center w-full gap-6",
-		backButton:
-			"flex items-center justify-center bg-base-100 border border-primary p-4 rounded-full  h-16",
-		shareButton:
-			"flex items-center justify-center bg-base-100 border border-primary p-4 rounded-full",
+		backButton: "",
+		shareButton: "flex items-center justify-center",
 		codeTextContainer: "flex flex-row items-center justify-center",
 		codeDigitBox: "bg-gray-200 rounded-md m-1 p-4",
 		createGameButton: "w-2/3",
@@ -64,16 +61,15 @@ export default function CreateGame(): ReactNode {
 			<StatusBar style="light" />
 			<View className={styles.container}>
 				<View className={styles.headerContainer}>
-					<Pressable
+					<Button
+						iconName="chevron-left"
+						iconSize={32}
+						iconColor="white"
+						color="link"
+						buttonStyle={styles.backButton}
 						onPress={handleExit}
-						className={styles.backButton}
-					>
-						<MaterialCommunityIcons
-							name="chevron-left"
-							size={24}
-							color="#6D28D9"
-						/>
-					</Pressable>
+						size="sm"
+					/>
 					<View>
 						<Text className={styles.headerText}>
 							{translate("createGamePage.createGameHeader")}
@@ -92,19 +88,18 @@ export default function CreateGame(): ReactNode {
 						))}
 					</View>
 					<View className={styles.buttonContainer}>
-						<Pressable
+						<Button
+							iconName="share-variant"
+							iconSize={24}
+							color="link"
+							buttonStyle={styles.shareButton}
+							size="lg"
 							onPress={handleShare}
-							className={styles.shareButton}
-						>
-							<MaterialCommunityIcons
-								name="share-variant"
-								size={24}
-								color="#6D28D9"
-							/>
-						</Pressable>
+						/>
 
 						<Button
-							className={styles.createGameButton}
+							onPress={handleExit}
+							buttonStyle={styles.createGameButton}
 							size="lg"
 							color="primary"
 							label={translate("createGamePage.createGameButton")}

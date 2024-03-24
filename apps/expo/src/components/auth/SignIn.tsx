@@ -1,9 +1,9 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 
 import { MotiView } from "moti"
 
-import { Button, EmailInputField, PasswordInputField } from "~/components"
+import { Button, EmailInputField, PasswordInputField } from "~/components/ui"
 import { useSettingsStore } from "~/stores"
 
 type Props = {
@@ -83,14 +83,14 @@ const SignIn = ({ handleToggleSignUp, onBackPress }: Props) => {
 			</View>
 
 			<Button
-				className=""
+				buttonStyle=""
 				color="link"
 				size="md"
 				label={translate("authPage.signIn.forgotPassword")}
 				onPress={onBackPress}
 			/>
 			<Button
-				className="w-full"
+				buttonStyle="w-full"
 				color="primary"
 				size="xl"
 				label={"Sign In"}

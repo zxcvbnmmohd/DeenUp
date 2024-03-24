@@ -6,10 +6,10 @@ import { Text, TouchableOpacity, View } from "react-native"
 
 import * as Clipboard from "expo-clipboard"
 
-import { Button } from "~/components"
-import { useSettingsStore } from "~/stores"
+import CodeInput from "~components/auth/CodeInput"
 
-import CodeInput from "./CodeInput"
+import { Button } from "~/components/ui"
+import { useSettingsStore } from "~/stores"
 
 type States = {
 	inputCode: string[]

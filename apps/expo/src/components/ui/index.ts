@@ -5,6 +5,7 @@ import InputField, {
 	NameInputField,
 	PasswordInputField,
 } from "./InputField"
+import SegmentedProgressBar from "./SegmentedProgressBar"
 import Spacer from "./Spacer"
 import Timer from "./Timer"
 
@@ -17,4 +18,5 @@ export {
 	EmailInputField,
 	NameInputField,
 	PasswordInputField,
+	SegmentedProgressBar,
 }

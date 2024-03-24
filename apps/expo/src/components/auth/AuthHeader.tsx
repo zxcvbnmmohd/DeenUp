@@ -2,9 +2,8 @@ import { Text, TouchableOpacity, View } from "react-native"
 
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 
+import { SegmentedProgressBar } from "~/components/ui"
 import { useSettingsStore } from "~/stores"
-
-import SegmentedProgressBar from "../SegmentedProgressBar"
 
 type Step = {
 	header: string

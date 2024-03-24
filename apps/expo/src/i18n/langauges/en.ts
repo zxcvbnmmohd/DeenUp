@@ -66,7 +66,8 @@ export default {
 			noCodeRecieved:
 				"Didn't receive the code? check your spam folder or ",
 			resendCode: "Resend Code",
-			submitButton: "Submit",
+			submitButton: "Verify 🕵️",
+
 			header: "Verify Your Email",
 			subheader: "Enter the code we sent to %{email}",
 			pasteFromClipboard: "Paste from clipboard",

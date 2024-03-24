@@ -1,12 +1,11 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
 
 import { StatusBar } from "expo-status-bar"
 
 import { AnimatePresence, MotiView } from "moti"
 
-import { ForgotPassword, SignIn, SignUp } from "~/components/auth"
-import AuthHeader from "~/components/auth/AuthHeader"
+import { AuthHeader, ForgotPassword, SignIn, SignUp } from "~/components/auth"
 
 type States = {
 	isSignUp: boolean
@@ -23,24 +22,6 @@ export default function Auth() {
 		name: "",
 	})
 	const { isSignUp, isForgotPassword, step, name } = state
-
-	const handleToggleSignUp = () => {
-		setState((prevState) => ({
-			...prevState,
-			step: 0,
-			isSignUp: !prevState.isSignUp,
-			isForgotPassword: false,
-		}))
-	}
-
-	const handleToggleForgotPassword = () => {
-		setState((prevState) => ({
-			...prevState,
-			step: 0,
-			isForgotPassword: !prevState.isForgotPassword,
-			isSignUp: false,
-		}))
-	}
 
 	const motiStyle = StyleSheet.create({
 		container: {
@@ -67,11 +48,28 @@ export default function Auth() {
 			position: "relative",
 		},
 	})
-
 	const styles = {
 		header: "h-1/2 flex-1 items-center justify-center bg-primary",
 		logo: "text-base-100 text-6xl font-bold",
 		closeButton: "size-10 absolute top-12 right-10",
+	}
+
+	const handleToggleSignUp = () => {
+		setState((prevState) => ({
+			...prevState,
+			step: 0,
+			isSignUp: !prevState.isSignUp,
+			isForgotPassword: false,
+		}))
+	}
+
+	const handleToggleForgotPassword = () => {
+		setState((prevState) => ({
+			...prevState,
+			step: 0,
+			isForgotPassword: !prevState.isForgotPassword,
+			isSignUp: false,
+		}))
 	}
 
 	return (

@@ -5,9 +5,9 @@ import { useState } from "react"
 import LottieView from "lottie-react-native"
 import { AnimatePresence, MotiView } from "moti"
 
-import { lottieBlueCheck } from "~/assets/index"
-import { Button, EmailInputField, PasswordInputField } from "~/components"
+import { lottieBlueCheck } from "~/assets"
 import { Verify } from "~/components/auth"
+import { Button, EmailInputField, PasswordInputField } from "~/components/ui"
 import { useSettingsStore } from "~/stores"
 
 type Props = {
@@ -32,6 +32,7 @@ const ForgotPassword = ({ step, setStep, onBackPress }: Props) => {
 		password: "",
 		confirmPassword: "",
 	})
+
 	const [errors, setErrors] = useState({
 		email: "",
 		password: "",
@@ -162,10 +163,10 @@ const ForgotPassword = ({ step, setStep, onBackPress }: Props) => {
 			</AnimatePresence>
 
 			<Button
-				isLoading={isSubmiting}
-				className="w-full"
+				buttonStyle="w-full"
 				color="primary"
 				size="xl"
+				isLoading={isSubmiting}
 				label={
 					step === 0
 						? translate("authPage.forgotPassword.requestReset")

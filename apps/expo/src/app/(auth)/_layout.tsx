@@ -1,5 +1,3 @@
-import React from "react"
-
 import { Stack } from "expo-router"
 
 export default function _layout() {
@@ -7,7 +5,6 @@ export default function _layout() {
 		<Stack
 			screenOptions={{
 				headerShown: false,
-				presentation: "transparentModal",
 			}}
 		/>
 	)
