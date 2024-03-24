@@ -93,11 +93,12 @@ export default function CreateGame(): ReactNode {
 							iconSize={24}
 							color="link"
 							buttonStyle={styles.shareButton}
-							onPress={handleExit}
 							size="lg"
+							onPress={handleShare}
 						/>
 
 						<Button
+							onPress={handleExit}
 							buttonStyle={styles.createGameButton}
 							size="lg"
 							color="primary"
