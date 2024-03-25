@@ -1,0 +1,15 @@
+{
+	"extends": "@deenup/tsconfig/base.json",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./src/*"],
+			"~graphql/*": ["./src/graphql/*"],
+			"~stores/*": ["./src/stores/*"],
+			"~types/*": ["./src/types/*"]
+		},
+		"tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+	},
+	"include": ["*.ts", "src"],
+	"exclude": ["node_modules"]
+}

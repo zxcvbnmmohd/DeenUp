@@ -1,0 +1,35 @@
+{
+	"name": "@deenup/store",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"license": "MIT",
+	"scripts": {
+		"clean": "rm -rf .turbo node_modules",
+		"format": "prettier --check . --ignore-path ../../.gitignore",
+		"lint": "eslint .",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"aws-amplify": "^6.0.21",
+		"zustand": "^4.5.2"
+	},
+	"devDependencies": {
+		"@deenup/eslint-config": "workspace:^0.2.0",
+		"@deenup/prettier-config": "workspace:^0.1.0",
+		"@deenup/tsconfig": "workspace:^0.1.0",
+		"eslint": "^8.57.0",
+		"prettier": "^3.2.5",
+		"typescript": "^5.3.3"
+	},
+	"eslintConfig": {
+		"root": true,
+		"extends": [
+			"@deenup/eslint-config/base"
+		]
+	},
+	"prettier": "@deenup/prettier-config"
+}
