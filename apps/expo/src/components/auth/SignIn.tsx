@@ -4,7 +4,7 @@ import { Text, TouchableOpacity, View } from "react-native"
 import { MotiView } from "moti"
 
 import { Button, EmailInputField, PasswordInputField } from "~/components/ui"
-import { useSettingsStore } from "~/stores"
+import { useAuthStore, useSettingsStore, useUserStore } from "~/stores"
 
 type Props = {
 	handleToggleSignUp: () => void
@@ -13,10 +13,25 @@ type Props = {
 
 const SignIn = ({ handleToggleSignUp, onBackPress }: Props) => {
 	const translate = useSettingsStore((state) => state.translate)
-	const [formData, setFormData] = useState({
-		email: "",
-		password: "",
-	})
+	const {
+		email,
+		name,
+		password,
+
+		handleSignIn,
+		setUserEmail,
+		setUserPassword,
+	} = useAuthStore((state) => ({
+		setUserName: state.setUserName,
+		setUserEmail: state.setUserEmail,
+		setUserPassword: state.setUserPassword,
+		handleSignIn: state.handleSignIn,
+		email: state.email,
+		name: state.name,
+		password: state.password,
+	}))
+	const { loading } = useAuthStore()
+
 	const [errors, setErrors] = useState({
 		email: "",
 		password: "",
@@ -27,8 +42,7 @@ const SignIn = ({ handleToggleSignUp, onBackPress }: Props) => {
 		signUpText: "font-bold text-primary",
 	}
 
-	const handleSubmit = () => {
-		const { email, password } = formData
+	const handleSubmit = async () => {
 		const newErrors = {
 			email: email ? "" : translate("authPage.alerts.emailRequired"),
 			password: password
@@ -40,19 +54,31 @@ const SignIn = ({ handleToggleSignUp, onBackPress }: Props) => {
 		if (Object.values(newErrors).some((error) => error !== "")) {
 			return
 		}
+
+		await handleSignIn({
+			username: email,
+			password: password,
+		})
+			.then((res) => {
+				console.debug(res)
+			})
+			.catch((err) => {
+				console.error(err)
+			})
 	}
 
 	const handleInputChange = (field: string, value: string) => {
 		if (field === "password" && value === "Enter") {
-			handleSubmit()
-
 			return
 		}
-
-		setFormData((prevData) => ({
-			...prevData,
-			[field]: value,
-		}))
+		switch (field) {
+			case "email":
+				setUserEmail(value)
+				break
+			case "password":
+				setUserPassword(value)
+				break
+		}
 	}
 
 	return (
@@ -69,12 +95,12 @@ const SignIn = ({ handleToggleSignUp, onBackPress }: Props) => {
 		>
 			<View className="gap-8">
 				<EmailInputField
-					value={formData.email}
+					value={email}
 					error={errors.email}
 					onChangeText={(value) => handleInputChange("email", value)}
 				/>
 				<PasswordInputField
-					value={formData.password}
+					value={password}
 					error={errors.password}
 					onChangeText={(value) =>
 						handleInputChange("password", value)
@@ -95,6 +121,7 @@ const SignIn = ({ handleToggleSignUp, onBackPress }: Props) => {
 				size="xl"
 				label={"Sign In"}
 				onPress={handleSubmit}
+				isLoading={loading}
 			/>
 			<View className={styles.footer}>
 				<Text>{translate("authPage.signIn.noAccount")}</Text>

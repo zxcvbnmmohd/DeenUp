@@ -9,7 +9,7 @@ import * as Clipboard from "expo-clipboard"
 import CodeInput from "~components/auth/CodeInput"
 
 import { Button } from "~/components/ui"
-import { useSettingsStore } from "~/stores"
+import { useAuthStore, useSettingsStore } from "~/stores"
 
 type States = {
 	inputCode: string[]
@@ -22,6 +22,7 @@ type Props = {
 const Verify = ({ error, setCode }: Props) => {
 	const CODE_LENGTH = 6
 	const translate = useSettingsStore((state) => state.translate)
+	const { email, loading, confirmationCodeSent } = useAuthStore()
 
 	const [states, setStates] = useState<States>({
 		inputCode: Array(CODE_LENGTH).fill("") as string[],

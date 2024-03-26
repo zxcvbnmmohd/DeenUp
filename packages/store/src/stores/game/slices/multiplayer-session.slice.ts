@@ -1,9 +1,9 @@
 import type { StateCreator } from "zustand"
 
 import type { GameStore } from "."
-import type { Player, PossibleAnswer, Question } from "~/types"
+import type { Player, PossibleAnswer, Question } from "../../../types"
 
-import { randomQuestions } from "~/assets"
+import { randomQuestions } from "../../../assets"
 
 type MultiplayerSessionStates = {
 	id: string | null

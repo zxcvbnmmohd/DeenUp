@@ -5,8 +5,8 @@ import { Text, TextInput, View } from "react-native"
 type Props = {
 	prefix?: string
 	placeholder: string
-	value: string
-	error: string
+	value: string | undefined
+	error: string | undefined
 	secureTextEntry?: boolean
 	autoCorrect?: boolean
 	keyboardType?:
@@ -58,8 +58,8 @@ const InputField = ({
 	)
 }
 type InputFieldProps = {
-	value: string
-	error: string
+	value: string | undefined
+	error: string | undefined
 	onChangeText: (text: string) => void
 }
 const EmailInputField: FC<InputFieldProps> = (props) => {

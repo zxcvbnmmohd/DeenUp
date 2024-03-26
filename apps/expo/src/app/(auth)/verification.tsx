@@ -8,11 +8,13 @@ import LottieView from "lottie-react-native"
 import { lottieBlueCheck } from "~/assets/"
 import { Verify } from "~/components/auth/"
 import { Button } from "~/components/ui"
-import { useSettingsStore } from "~/stores"
+import { useAuthStore, useSettingsStore } from "~/stores"
 
 export default function Auth() {
 	const translate = useSettingsStore((state) => state.translate)
-	const [isSubmiting, setSubmitting] = useState(false)
+
+	const { email, loading } = useAuthStore()
+
 	const [isVerified, setVerified] = useState(false)
 	const [error, setError] = useState<string>("")
 	const [code, setCode] = useState("")
@@ -32,14 +34,6 @@ export default function Auth() {
 
 			return
 		}
-
-		setSubmitting(true)
-
-		setTimeout(() => {
-			setSubmitting(false)
-			setError("")
-			setVerified(true)
-		}, 5000)
 	}
 
 	return (
@@ -52,7 +46,7 @@ export default function Auth() {
 					</Text>
 					<Text className={styles.subheader}>
 						{translate("authPage.verify.subheader", {
-							email: "your@email.com",
+							email: email,
 						})}
 					</Text>
 				</View>
@@ -76,7 +70,7 @@ export default function Auth() {
 					size="xl"
 					buttonStyle={styles.submitButton}
 					onPress={() => handleVerifySubmit()}
-					isLoading={isSubmiting}
+					isLoading={loading}
 				/>
 			</View>
 		</>

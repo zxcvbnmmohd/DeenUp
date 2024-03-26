@@ -6,12 +6,12 @@ import { StatusBar } from "expo-status-bar"
 import { AnimatePresence, MotiView } from "moti"
 
 import { AuthHeader, ForgotPassword, SignIn, SignUp } from "~/components/auth"
+import { useAuthStore } from "~/stores"
 
 type States = {
 	isSignUp: boolean
 	isForgotPassword: boolean
 	step: number
-	name: string
 }
 
 export default function Auth() {
@@ -19,9 +19,8 @@ export default function Auth() {
 		isSignUp: false,
 		isForgotPassword: false,
 		step: 0,
-		name: "",
 	})
-	const { isSignUp, isForgotPassword, step, name } = state
+	const { isSignUp, isForgotPassword, step } = state
 
 	const motiStyle = StyleSheet.create({
 		container: {
@@ -120,7 +119,6 @@ export default function Auth() {
 											: handleToggleForgotPassword()
 									}
 									isSignUp={state.isSignUp}
-									name={name}
 								/>
 							</MotiView>
 						)}

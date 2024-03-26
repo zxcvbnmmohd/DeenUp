@@ -1,9 +1,9 @@
 import type { StateCreator } from "zustand"
 
 import type { GameStore } from "."
-import type { Question } from "~/types"
+import type { Question } from "../../../types"
 
-import { randomQuestions } from "~/assets"
+import { randomQuestions } from "../../../assets"
 
 type SoloSessionStates = {
 	currentQuestionIndex: number

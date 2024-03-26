@@ -1,7 +1,7 @@
 import type { StateCreator } from "zustand"
 
 import type { GameStore } from "."
-import type { Player } from "~/types"
+import type { Player } from "../../../types"
 
 type LobbyStates = {
 	lobbyCode: string | null

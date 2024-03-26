@@ -1,12 +1,15 @@
+import type { GraphQLResult } from "aws-amplify/api"
+
 import { generateClient } from "aws-amplify/api"
 
-import type { API } from "~/graphql"
+import type { API } from "../graphql"
 
-import { Mutation, Query, Subscription } from "~/graphql"
-import { StorageService } from "~/services"
+import { Mutation, Query, Subscription } from "../graphql"
+import { GraphQLService, StorageService } from "../services"
 
 export default class UserApi {
 	static readonly client = generateClient()
+	static readonly graphqlService = new GraphQLService()
 	static readonly storageService = new StorageService()
 
 	public static onUpdate(
@@ -29,19 +32,34 @@ export default class UserApi {
 				error: (error) => onError(error),
 			})
 
+		// const subscription = this.graphqlService.subscribe(
+		// 	Subscription.onUpdateUser,
+		// 	{
+		// 		query: Subscription.onUpdateUser,
+		// 		variables: {
+		// 			filter: {
+		// 				id: { eq: user.id },
+		// 			},
+		// 		},
+		// 	},
+		// )
+
 		return subscription
 	}
 
 	public static async read(id: string): Promise<API.User | null> {
-		const response = await this.client.graphql({
-			query: Query.getUser,
-			variables: { id },
-		})
+		const response = (await this.graphqlService.query(Query.getUser, {
+			id,
+		})) as GraphQLResult<API.GetUserQuery>
+		if (response) {
+			response.data
+		}
+		const user = response.data
 
-		const user = response.data.getUser
-
-		if (user?.selfie) {
-			user.selfie = await this.storageService.getUrlFromkey(user.selfie)
+		if (user.getUser) {
+			user.getUser.selfie = await this.storageService.getUrlFromkey(
+				user.getUser.selfie!,
+			)
 		}
 
 		return user as API.User

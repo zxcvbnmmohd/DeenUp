@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View } from "react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 import { SegmentedProgressBar } from "~/components/ui"
-import { useSettingsStore } from "~/stores"
+import { useAuthStore, useSettingsStore } from "~/stores"
 
 type Step = {
 	header: string
@@ -15,7 +15,6 @@ type Props = {
 	handleBack: () => void
 	handleToggle: () => void
 	isSignUp: boolean
-	name?: string
 }
 
 const signUpSteps: Record<number, Step> = {
@@ -60,14 +59,9 @@ const forgotPasswordSteps: Record<number, Step> = {
 	},
 }
 
-const AuthHeader = ({
-	step,
-	handleBack,
-	handleToggle,
-	isSignUp,
-	name,
-}: Props) => {
+const AuthHeader = ({ step, handleBack, handleToggle, isSignUp }: Props) => {
 	const translate = useSettingsStore((state) => state.translate)
+	const { name, email } = useAuthStore()
 	const steps = isSignUp ? signUpSteps : forgotPasswordSteps
 	const currentStep = steps[step]!
 
@@ -107,7 +101,9 @@ const AuthHeader = ({
 				<Text className={styles.subheaderText}>
 					{step === 1 && isSignUp
 						? translate(currentStep.subheader, { name })
-						: translate(currentStep.subheader)}
+						: step === 3 && isSignUp
+							? translate(currentStep.subheader, { email })
+							: translate(currentStep.subheader)}
 				</Text>
 			</View>
 		</View>

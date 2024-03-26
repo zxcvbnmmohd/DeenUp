@@ -16,18 +16,20 @@ import {
 import { Hub } from "aws-amplify/utils"
 
 import type { AuthStore } from "."
-import type * as API from "~/graphql/api"
-import type { Result } from "~/types"
+import type * as API from "../../../graphql/api"
+import type { Result } from "../../../types"
 
-import useUserStore from "~/stores/user/useUserStore"
+import useUserStore from "../../../stores/user/useUserStore"
 
 type HubSubscription = ReturnType<typeof Hub.listen>
 
 type AuthState = {
+	email: string
+	name: string
+	password: string
 	loading: boolean
 	currentUser: AuthUser | null
 	userInput: API.User | null
-	password: string | undefined
 	confirmationCodeSent: boolean
 	error: unknown
 }
@@ -58,6 +60,9 @@ type AuthActions = {
 		confirmationCode: string
 		newPassword: string
 	}) => Promise<Result<boolean>>
+	setUserName: (name: string) => void
+	setUserEmail: (email: string) => void
+	setUserPassword: (password: string) => void
 	destroy: () => void
 }
 
@@ -98,12 +103,26 @@ const createAuthSlice: StateCreator<AuthStore, [], [], AuthSlice> = (
 	void handleHubSubscriptions()
 
 	return {
+		name: "",
+		email: "",
+		password: "",
 		loading: false,
 		currentUser: null,
 		userInput: null,
-		password: undefined,
 		confirmationCodeSent: false,
 		error: null,
+
+		setUserEmail(email: string) {
+			set({ email })
+		},
+
+		setUserName(name: string) {
+			set({ name })
+		},
+
+		setUserPassword(password: string) {
+			set({ password })
+		},
 
 		handleGetCurrentUser: async (): Promise<void> => {
 			if (get().loading) return
@@ -152,6 +171,9 @@ const createAuthSlice: StateCreator<AuthStore, [], [], AuthSlice> = (
 				set({ loading: false, currentUser: currentUser })
 			} catch (error) {
 				console.error("error signing in", error)
+				setTimeout(() => {
+					set({ loading: false, error })
+				}, 2000)
 			}
 		},
 

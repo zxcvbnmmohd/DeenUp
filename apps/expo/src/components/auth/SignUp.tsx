@@ -11,13 +11,17 @@ import {
 	NameInputField,
 	PasswordInputField,
 } from "~/components/ui"
-import { useSettingsStore } from "~/stores"
+import { useAuthStore, useSettingsStore } from "~/stores"
+
+export enum UserType {
+	ADMIN = "ADMIN",
+	PLAYER = "PLAYER",
+}
 
 type States = {
 	isSignUp: boolean
 	isForgotPassword: boolean
 	step: number
-	name: string
 }
 
 type Props = {
@@ -28,22 +32,34 @@ type Props = {
 
 const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 	const translate = useSettingsStore((state) => state.translate)
+	const {
+		email,
+		name,
+		password,
+		setUserName,
+		setUserEmail,
+		setUserPassword,
+		handleSignUp,
+	} = useAuthStore((state) => ({
+		setUserName: state.setUserName,
+		setUserEmail: state.setUserEmail,
+		setUserPassword: state.setUserPassword,
+		handleSignUp: state.handleSignUp,
+		email: state.email,
+		name: state.name,
+		password: state.password,
+	}))
+
 	const [code, setCode] = useState("")
 	const [codeError, setCodeError] = useState("")
-	const [formData, setFormData] = useState({
-		name: "",
-		email: "",
-		password: "",
-	})
+
 	const [errors, setErrors] = useState({
 		name: "",
 		email: "",
 		password: "",
 	})
 
-	const handleSubmit = () => {
-		const { name, email, password } = formData
-
+	const handleSubmit = async () => {
 		const newErrors = {
 			name: name ? "" : translate("authPage.alerts.nameRequired"),
 			email: email ? "" : translate("authPage.alerts.emailRequired"),
@@ -57,11 +73,25 @@ const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 		if (Object.values(newErrors).some((error) => error !== "")) {
 			return
 		}
-
-		setStep((prevState) => ({
-			...prevState,
-			step: prevState.step + 1,
-		}))
+		if (step === 2) {
+			console.debug("signingup")
+			await handleSignUp({
+				username: email,
+				password: password,
+				name: name,
+				userType: "PLAYER" as UserType,
+			})
+				.then((res: unknown) => {
+					console.debug(res)
+					setStep((prevState) => ({
+						...prevState,
+						step: prevState.step + 1,
+					}))
+				})
+				.catch((err: unknown) => {
+					console.error(err)
+				})
+		}
 	}
 
 	const handleVerifySubmit = () => {
@@ -71,7 +101,6 @@ const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 			return
 		}
 
-		console.log("submit", formData)
 		setStep((prevState) => ({
 			...prevState,
 			step: prevState.step + 1,
@@ -79,7 +108,6 @@ const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 	}
 
 	const handleContinue = () => {
-		const { name, email, password } = formData
 		const newErrors = {
 			name: step === 0 && !name ? "Name is required" : "",
 			email: step === 1 && !email ? "Email is required" : "",
@@ -94,17 +122,25 @@ const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 
 		setStep((prevState) => ({
 			...prevState,
-			name: name,
 			step: prevState.step + 1,
 		}))
 	}
 
 	const handleInputChange = (field: string, value: string) => {
 		if (value === "Enter") handleContinue()
-		setFormData((prevData) => ({
-			...prevData,
-			[field]: value,
-		}))
+		switch (field) {
+			case "name":
+				setUserName(value)
+				break
+			case "email":
+				setUserEmail(value)
+				break
+			case "password":
+				setUserPassword(value)
+				break
+			default:
+				break
+		}
 	}
 
 	return (
@@ -130,7 +166,7 @@ const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 					>
 						<NameInputField
 							error={errors.name}
-							value={formData.name}
+							value={name}
 							onChangeText={(value) =>
 								handleInputChange("name", value)
 							}
@@ -145,7 +181,7 @@ const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 					>
 						<EmailInputField
 							error={errors.email}
-							value={formData.email}
+							value={email}
 							onChangeText={(value) =>
 								handleInputChange("email", value)
 							}
@@ -160,7 +196,7 @@ const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 					>
 						<PasswordInputField
 							error={errors.password}
-							value={formData.password}
+							value={password}
 							onChangeText={(value) =>
 								handleInputChange("password", value)
 							}

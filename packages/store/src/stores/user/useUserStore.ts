@@ -1,10 +1,10 @@
 import { create } from "zustand"
 
-import type { SharedSlice } from "./slices"
+import type { UserSlice } from "./slices"
 
 import { createUserSlice } from "./slices"
 
-const useUserStore = create<SharedSlice>()((...a) => ({
+const useUserStore = create<UserSlice>()((...a) => ({
 	...createUserSlice(...a),
 }))
 

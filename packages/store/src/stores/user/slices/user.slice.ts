@@ -1,10 +1,10 @@
 import type { StateCreator } from "zustand"
 
 import type { UserStore } from "."
-import type { UpdateUserInput, User } from "~/graphql/api"
-import type { Result } from "~/types"
+import type { UpdateUserInput, User } from "../../../graphql/api"
+import type { Result } from "../../../types"
 
-import { UserApi } from "~/apis"
+import { UserApi } from "../../../apis"
 
 type UserState = {
 	currentUser: User | null

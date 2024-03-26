@@ -1,15 +1,68 @@
-// import { generateClient } from "aws-amplify/api"
+import type { DocumentType } from "@aws-amplify/core/internals/utils"
+import type { DocumentNode } from "graphql"
 
-// export default class GraphQLService {
-// 	static readonly client = generateClient()
+import { generateClient } from "aws-amplify/api"
 
-// 	public static async query(query: string, variables: any) {
-//         const response = await this.client.graphql({ query, variables })
+export default class GraphQLService {
+	private readonly client = generateClient()
 
-// 	}
+	query = async (
+		query: string | DocumentNode,
+		variables?: Record<string, DocumentType>,
+	): Promise<any> => {
+		try {
+			const response = await this.client.graphql({
+				query,
+				variables,
+			})
 
-// 	public static async mutation(query: string, variables: any) {
+			return response
+		} catch (error: unknown) {
+			console.log(error)
 
-//     }
-// 	public static async subscription(query: string, variables: any) {}
-// }
+			return null
+		}
+	}
+
+	mutate = async (
+		query: string | DocumentNode,
+		variables?: Record<string, DocumentType>,
+	): Promise<any> => {
+		try {
+			const response = await this.client.graphql({
+				query,
+				variables,
+			})
+
+			return response
+		} catch (error) {
+			console.log("Error")
+
+			return null
+		}
+	}
+	// subscribe = async <T>(
+	// 	onDataReceived: (data: any) => void,
+	// 	onError: (error: unknown) => void,
+	// 	query: string | DocumentNode,
+	// 	variables?: Record<string, DocumentType>,
+	// ): Promise<GraphQLSubscription<T> | undefined> => {
+	// 	try {
+	// 		const subscription = await this.client
+	// 			.graphql<GeneratedSubscription<T>>({
+	// 				query,
+	// 				variables,
+	// 			})
+	// 			.subscribe({
+	// 				next: (data: unknown) => onDataReceived(data), // Avoid unnecessary type casting
+	// 				error: onError,
+	// 			})
+
+	// 		return subscription
+	// 	} catch (error) {
+	// 		console.error("Error subscribing:", error)
+
+	// 		return undefined
+	// 	}
+	// }
+}

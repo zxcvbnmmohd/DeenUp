@@ -8,7 +8,7 @@ import { AnimatePresence, MotiView } from "moti"
 import { lottieBlueCheck } from "~/assets"
 import { Verify } from "~/components/auth"
 import { Button, EmailInputField, PasswordInputField } from "~/components/ui"
-import { useSettingsStore } from "~/stores"
+import { useAuthStore, useSettingsStore } from "~/stores"
 
 type Props = {
 	step: number
@@ -20,7 +20,6 @@ type States = {
 	isSignUp: boolean
 	isForgotPassword: boolean
 	step: number
-	name: string
 }
 
 const ForgotPassword = ({ step, setStep, onBackPress }: Props) => {
