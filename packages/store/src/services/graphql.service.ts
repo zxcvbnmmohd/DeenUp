@@ -10,7 +10,7 @@ export default class GraphQLService {
 	query = async (
 		query: string | DocumentNode,
 		variables?: Record<string, DocumentType>,
-	): Promise<any> => {
+	): Promise<unknown> => {
 		try {
 			const response = await this.client.graphql({
 				query,
@@ -28,7 +28,7 @@ export default class GraphQLService {
 	mutate = async (
 		query: string | DocumentNode,
 		variables?: Record<string, DocumentType>,
-	): Promise<any> => {
+	): Promise<unknown> => {
 		try {
 			const response = await this.client.graphql({
 				query,
