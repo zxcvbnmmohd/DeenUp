@@ -22,7 +22,7 @@ type Props = {
 const Verify = ({ error, setCode }: Props) => {
 	const CODE_LENGTH = 6
 	const translate = useSettingsStore((state) => state.translate)
-	const { email, loading, confirmationCodeSent } = useAuthStore()
+	const { username, loading, confirmationCodeSent } = useAuthStore()
 
 	const [states, setStates] = useState<States>({
 		inputCode: Array(CODE_LENGTH).fill("") as string[],

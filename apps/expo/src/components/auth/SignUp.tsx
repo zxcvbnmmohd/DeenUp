@@ -45,7 +45,7 @@ const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 		setUserEmail: state.setUserEmail,
 		setUserPassword: state.setUserPassword,
 		handleSignUp: state.handleSignUp,
-		email: state.email,
+		email: state.username,
 		name: state.name,
 		password: state.password,
 	}))
@@ -76,10 +76,10 @@ const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 		if (step === 2) {
 			console.debug("signingup")
 			await handleSignUp({
-				username: email,
-				password: password,
-				name: name,
-				userType: "PLAYER" as UserType,
+				username: email!,
+				password: password!,
+				name: name!,
+				userType: UserType.PLAYER,
 			})
 				.then((res: unknown) => {
 					console.debug(res)
@@ -166,7 +166,7 @@ const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 					>
 						<NameInputField
 							error={errors.name}
-							value={name}
+							value={name!}
 							onChangeText={(value) =>
 								handleInputChange("name", value)
 							}
@@ -181,7 +181,7 @@ const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 					>
 						<EmailInputField
 							error={errors.email}
-							value={email}
+							value={email!}
 							onChangeText={(value) =>
 								handleInputChange("email", value)
 							}
@@ -196,7 +196,7 @@ const SignUp = ({ step, setStep, handleToggleSignUp }: Props) => {
 					>
 						<PasswordInputField
 							error={errors.password}
-							value={password}
+							value={password!}
 							onChangeText={(value) =>
 								handleInputChange("password", value)
 							}

@@ -24,13 +24,25 @@ type States = {
 
 const ForgotPassword = ({ step, setStep, onBackPress }: Props) => {
 	const translate = useSettingsStore((state) => state.translate)
+	const {
+		email,
+		password,
+		confirmPassword,
+		setUserEmail,
+		setUserPassword,
+		handleResetPassword,
+	} = useAuthStore((state) => ({
+		setUserName: state.setUserName,
+		setUserEmail: state.setUserEmail,
+		setUserPassword: state.setUserPassword,
+		handleResetPassword: state.handleResetPassword,
+		email: state.username,
+		name: state.name,
+		password: state.password,
+		confirmPassword: state.confirmPassword,
+	}))
 	const [code, setCode] = useState("")
 	const [isSubmiting, setSubmitting] = useState(false)
-	const [formData, setFormData] = useState({
-		email: "",
-		password: "",
-		confirmPassword: "",
-	})
 
 	const [errors, setErrors] = useState({
 		email: "",
@@ -40,8 +52,6 @@ const ForgotPassword = ({ step, setStep, onBackPress }: Props) => {
 	})
 
 	const handleSubmit = () => {
-		const { email, password, confirmPassword } = formData
-
 		const newErrors = {
 			email: step === 0 && !email ? "Email is required" : "",
 			code: step === 1 && !code ? "Code is required" : "",
@@ -70,10 +80,22 @@ const ForgotPassword = ({ step, setStep, onBackPress }: Props) => {
 	}
 
 	const handleInputChange = (field: string, value: string) => {
-		setFormData((prevData) => ({
-			...prevData,
-			[field]: value,
-		}))
+		switch (field) {
+			case "email":
+				setUserEmail(value)
+				break
+			case "password":
+				setUserPassword(value)
+				break
+			case "confirmPassword":
+				setUserPassword(value)
+				break
+			case "code":
+				setCode(value)
+				break
+			default:
+				break
+		}
 	}
 
 	return (
@@ -98,7 +120,7 @@ const ForgotPassword = ({ step, setStep, onBackPress }: Props) => {
 						animate={{ opacity: 1, translateY: 0 }}
 					>
 						<EmailInputField
-							value={formData.email}
+							value={email}
 							error={errors.email}
 							onChangeText={(value) =>
 								handleInputChange("email", value)
@@ -123,14 +145,14 @@ const ForgotPassword = ({ step, setStep, onBackPress }: Props) => {
 						style={{ gap: 32 }}
 					>
 						<PasswordInputField
-							value={formData.password}
+							value={password}
 							error={errors.password}
 							onChangeText={(value) =>
 								handleInputChange("password", value)
 							}
 						/>
 						<PasswordInputField
-							value={formData.confirmPassword}
+							value={confirmPassword}
 							error={errors.confirmPassword}
 							onChangeText={(value) =>
 								handleInputChange("confirmPassword", value)

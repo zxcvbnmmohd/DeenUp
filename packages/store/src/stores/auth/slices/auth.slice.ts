@@ -1,4 +1,4 @@
-import type { AuthUser } from "aws-amplify/auth"
+import type { AuthError, AuthUser } from "aws-amplify/auth"
 import type { StateCreator } from "zustand"
 
 import {
@@ -16,27 +16,27 @@ import {
 import { Hub } from "aws-amplify/utils"
 
 import type { AuthStore } from "."
-import type * as API from "../../../graphql/api"
 import type { Result } from "../../../types"
 
+import * as API from "../../../graphql/api"
 import useUserStore from "../../../stores/user/useUserStore"
 
 type HubSubscription = ReturnType<typeof Hub.listen>
 
 type AuthState = {
-	email: string
-	name: string
-	password: string
+	username: string | null
+	name: string | null
+	password: string | null
+	confirmPassword: string | null
 	loading: boolean
 	currentUser: AuthUser | null
-	userInput: API.User | null
 	confirmationCodeSent: boolean
 	error: unknown
 }
 
 type AuthActions = {
 	handleGetCurrentUser: () => Promise<void>
-	handleSignIn: (p: { username: string; password: string }) => Promise<void>
+	handleSignIn: () => Promise<void>
 	handleSignInWithGoogle: () => Promise<void>
 	handleSignOut: (p?: { global: boolean }) => Promise<void>
 	handleSignUp: (p: {
@@ -103,17 +103,17 @@ const createAuthSlice: StateCreator<AuthStore, [], [], AuthSlice> = (
 	void handleHubSubscriptions()
 
 	return {
-		name: "",
-		email: "",
-		password: "",
+		name: null,
+		username: null,
+		password: null,
+		confirmPassword: null,
 		loading: false,
 		currentUser: null,
-		userInput: null,
 		confirmationCodeSent: false,
 		error: null,
 
-		setUserEmail(email: string) {
-			set({ email })
+		setUserEmail(username: string) {
+			set({ username })
 		},
 
 		setUserName(name: string) {
@@ -140,13 +140,19 @@ const createAuthSlice: StateCreator<AuthStore, [], [], AuthSlice> = (
 			}
 		},
 
-		handleSignIn: async (p): Promise<void> => {
+		handleSignIn: async (): Promise<void> => {
 			if (get().loading) return
 
 			set({ loading: true, error: null })
+			const { username, password } = get()
 
 			try {
-				const { isSignedIn, nextStep } = await signIn(p)
+				const { isSignedIn, nextStep } = await signIn({
+					username: username!,
+					password: password!,
+				})
+				console.debug("isSignedIn", isSignedIn)
+				console.log("nextStep", nextStep)
 				let currentUser: AuthUser | null = null
 
 				if (!isSignedIn) {
@@ -159,6 +165,9 @@ const createAuthSlice: StateCreator<AuthStore, [], [], AuthSlice> = (
 					case "CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED":
 					case "CONFIRM_SIGN_IN_WITH_TOTP_CODE":
 					case "CONFIRM_SIGN_UP":
+						currentUser = null
+
+						break
 					case "CONTINUE_SIGN_IN_WITH_MFA_SELECTION":
 					case "CONTINUE_SIGN_IN_WITH_TOTP_SETUP":
 					case "RESET_PASSWORD":
@@ -171,9 +180,8 @@ const createAuthSlice: StateCreator<AuthStore, [], [], AuthSlice> = (
 				set({ loading: false, currentUser: currentUser })
 			} catch (error) {
 				console.error("error signing in", error)
-				setTimeout(() => {
-					set({ loading: false, error })
-				}, 2000)
+
+				set({ loading: false, error })
 			}
 		},
 
@@ -203,21 +211,21 @@ const createAuthSlice: StateCreator<AuthStore, [], [], AuthSlice> = (
 			}
 		},
 
-		handleSignUp: async (p): Promise<void> => {
+		handleSignUp: async (): Promise<void> => {
 			if (get().loading) return
 
 			set({ loading: true, error: null })
 
-			const { name, username, password, userType } = p
+			const { name, username, password } = get()
 
 			try {
 				const { isSignUpComplete, nextStep } = await signUp({
-					username,
-					password,
+					username: username!,
+					password: password!,
 					options: {
 						userAttributes: {
-							name,
-							"custom:user_type": userType,
+							name: name!,
+							"custom:user_type": API.UserType.PLAYER,
 						},
 					},
 				})
@@ -229,6 +237,8 @@ const createAuthSlice: StateCreator<AuthStore, [], [], AuthSlice> = (
 				switch (nextStep.signUpStep) {
 					case "COMPLETE_AUTO_SIGN_IN":
 					case "CONFIRM_SIGN_UP":
+						set({ loading: false })
+						break
 					case "DONE":
 						set({ loading: false })
 						break

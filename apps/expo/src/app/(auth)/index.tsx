@@ -47,6 +47,7 @@ export default function Auth() {
 			position: "relative",
 		},
 	})
+
 	const styles = {
 		header: "h-1/2 flex-1 items-center justify-center bg-primary",
 		logo: "text-base-100 text-6xl font-bold",

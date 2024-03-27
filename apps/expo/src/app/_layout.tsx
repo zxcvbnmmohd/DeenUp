@@ -10,8 +10,6 @@ import "react-native-gesture-handler"
 
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 
-import { TRPCProvider } from "~/utils/api"
-
 import "~styles/styles.css"
 
 import { TouchableOpacity } from "react-native"
@@ -60,7 +58,8 @@ const RootLayout = () => {
 	}
 
 	return (
-		<TRPCProvider>
+		// <TRPCProvider>
+		<>
 			<Stack
 				screenOptions={{
 					headerShown: false,
@@ -111,7 +110,8 @@ const RootLayout = () => {
 				/>
 			</Stack>
 			<StatusBar />
-		</TRPCProvider>
+		</>
+		// </TRPCProvider>
 	)
 }
 

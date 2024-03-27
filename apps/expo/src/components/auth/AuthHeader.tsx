@@ -61,7 +61,7 @@ const forgotPasswordSteps: Record<number, Step> = {
 
 const AuthHeader = ({ step, handleBack, handleToggle, isSignUp }: Props) => {
 	const translate = useSettingsStore((state) => state.translate)
-	const { name, email } = useAuthStore()
+	const { name, username } = useAuthStore()
 	const steps = isSignUp ? signUpSteps : forgotPasswordSteps
 	const currentStep = steps[step]!
 
@@ -102,7 +102,7 @@ const AuthHeader = ({ step, handleBack, handleToggle, isSignUp }: Props) => {
 					{step === 1 && isSignUp
 						? translate(currentStep.subheader, { name })
 						: step === 3 && isSignUp
-							? translate(currentStep.subheader, { email })
+							? translate(currentStep.subheader, { username })
 							: translate(currentStep.subheader)}
 				</Text>
 			</View>

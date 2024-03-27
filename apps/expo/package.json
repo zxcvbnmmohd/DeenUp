@@ -2,7 +2,7 @@
 	"name": "@deenup/expo",
 	"version": "0.1.0",
 	"private": true,
-	"main": "expo-router/entry",
+	"main": "index.js",
 	"scripts": {
 		"clean": "git clean -xdf .expo .turbo node_modules",
 		"dev": "expo start",
@@ -35,6 +35,7 @@
 		"expo-router": "~3.4.8",
 		"expo-splash-screen": "~0.26.4",
 		"expo-status-bar": "~1.11.1",
+		"expo-system-ui": "~2.9.3",
 		"i18n-js": "^4.4.3",
 		"lottie-react-native": "6.5.1",
 		"moti": "^0.28.1",

@@ -17,7 +17,6 @@ const SignIn = ({ handleToggleSignUp, onBackPress }: Props) => {
 		email,
 		name,
 		password,
-
 		handleSignIn,
 		setUserEmail,
 		setUserPassword,
@@ -26,7 +25,7 @@ const SignIn = ({ handleToggleSignUp, onBackPress }: Props) => {
 		setUserEmail: state.setUserEmail,
 		setUserPassword: state.setUserPassword,
 		handleSignIn: state.handleSignIn,
-		email: state.email,
+		email: state.username,
 		name: state.name,
 		password: state.password,
 	}))
@@ -55,10 +54,7 @@ const SignIn = ({ handleToggleSignUp, onBackPress }: Props) => {
 			return
 		}
 
-		await handleSignIn({
-			username: email,
-			password: password,
-		})
+		await handleSignIn()
 			.then((res) => {
 				console.debug(res)
 			})
